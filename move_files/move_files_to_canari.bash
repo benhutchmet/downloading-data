@@ -53,6 +53,15 @@ for model in "${models[@]}"; do
     # Set up the files which will be moved from xfc to canari
     xfc_files=${xfc_base_dir}/${model}/*.nc
 
+    # Check whether any files exist in xfc
+    if [ "$(ls -A $xfc_files)" ]; then
+        echo "XFC directory is not empty"
+    else
+        echo "XFC directory is empty"
+        # Exit the script
+        exit 1
+    fi
+
     # Set up the canari directory
     canari_dir="${canari_base_dir}/${model}"
     # make the canari directory if it doesn't exist
