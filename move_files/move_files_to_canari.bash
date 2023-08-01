@@ -58,22 +58,18 @@ for model in "${models[@]}"; do
     # make the canari directory if it doesn't exist
     mkdir -p "$canari_dir"
 
-    # Iterate over the files
-    for xfc_file in $xfc_files; do
-        # Check if the file exists in canari
-        canari_file="${canari_dir}/$(basename $xfc_file)"
-
-        # If the file doesn't exist in canari, move it
-        if [ ! -f "$canari_file" ]; then
-            echo "Moving file $xfc_file to $canari_dir"
-            mv "$xfc_file" "$canari_dir"
-        else
-            echo "File $canari_file already exists. Not moving."
-        fi
-
-    done
-
+    # Check whether any files exist in the canari directory
+    if [ "$(ls -A $canari_dir)" ]; then
+        echo "Canari directory is not empty"
+        # Exit the script
+        exit 1
+    else
+        echo "Canari directory is empty"
+        # Move all the files from xfc to canari
+        echo "Moving all files from xfc to canari"
+        mv "$xfc_files" "$canari_dir"
+    fi
 done
 
 # Disable debugging
-set +x
+# set +x
