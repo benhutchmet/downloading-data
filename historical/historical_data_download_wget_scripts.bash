@@ -52,3 +52,53 @@ echo "[INFO] latest: ${latest}"
 echo "[INFO] project: ${project}"
 echo "[INFO] experiment_id: ${experiment_id}"
 echo "[INFO] table_id: ${table_id}"
+
+
+# Echo the variable name
+echo "[INFO] looping over the models and data nodes for the variable: ${variable_id}"
+
+# Loop over the models
+for model in "${historical_models[@]}"; do
+    # Echo the current model
+    echo "[INFO] model: ${model}"
+
+    # Loop over the data nodes
+    for data_node in "${data_nodes[@]}"; do
+        # Echo the current data node
+        echo "[INFO] data node: ${data_node}"
+
+        # Construct the url
+        # based on:
+        #url="https://esgf-data.dkrz.de/esg-search/wget?project=$project&experiment_id=$experiment_id&source_id=$model&table_id=$table_id&variable_id=$variable_id&limit=$limit&data_node=$node"
+            
+        url="https://esgf-data.dkrz.de/esg-search/wget?project=${project}&experiment_id=${experiment_id}&source_id=${model}&table_id=${table_id}&variable_id=${variable_id}&latest=${latest}&activity_id=${activity_id}&data_node=${data_node}"
+
+        # Echo the url
+        echo "[INFO] url: ${url}"
+
+        # Construct the wget script name
+        wget_script_name="${model}_${data_node}_${variable_id}.wget"
+
+        # Echo the wget script name
+        echo "[INFO] wget script name: ${wget_script_name}"
+
+        # Download the wget script
+        wget -O "${wget_scripts_dir}/${wget_script_name}" "${url}"
+
+        # Echo the wget script
+        echo "[INFO] wget script: ${wget_scripts_dir}/${wget_script_name}"
+
+        # Check that the wget script exists
+        if [ ! -f "${wget_scripts_dir}/${wget_script_name}" ]; then
+            echo "[ERROR] wget script does not exist"
+            # Echo the url for the wget script
+            echo "[ERROR] url: ${url}"
+        else
+            echo "[INFO] wget script exists"
+            echo "[INFO] url: ${url}"
+
+            # Make the wget script executable
+            chmod +x "${wget_scripts_dir}/${wget_script_name}"
+        fi
+    done
+done
