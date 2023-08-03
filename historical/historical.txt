@@ -1,0 +1,5 @@
+Experiment ID is just the historical case for the unitialized experiments.
+
+For example, the three ensemble members for BCC-CSM2-MR are stored within:
+latest = true AND (experiment_id = historical) AND (data_node = esgf.ceda.ac.uk) AND (source_id = BCC-CSM2-MR)
+
