@@ -10,6 +10,12 @@
 # Source the dictionaries file
 source "/home/users/benhutch/downloading-data/dictionaries.bash"
 
+# Echo the historical models
+echo "The historical models are: ${historical_models[@]}"
+
+# Echo the data nodes which we will try extracting the data from
+echo "The data nodes are: ${data_nodes[@]}"
+
 # Check that the correct number of arguments were provided
 if [ "$#" -ne 1 ]; then
     echo "Illegal number of arguments provided"
@@ -38,3 +44,11 @@ experiment_id="historical"
 table_id="Amon"
 
 # Echo the string we are looking for
+echo "[INFO] models: ${historical_models[@]}"
+echo "[INFO] data nodes: ${data_nodes[@]}"
+echo "[INFO] variable: ${variable_id}"
+echo "[INFO] activity_id: ${activity_id}"
+echo "[INFO] latest: ${latest}"
+echo "[INFO] project: ${project}"
+echo "[INFO] experiment_id: ${experiment_id}"
+echo "[INFO] table_id: ${table_id}"
