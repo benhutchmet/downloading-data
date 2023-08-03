@@ -88,11 +88,9 @@ for model in "${historical_models[@]}"; do
         # Echo the wget script
         echo "[INFO] wget script: ${wget_scripts_dir}/${wget_script_name}"
 
-        # Check that the wget script exists
-        if [ ! -f "${wget_scripts_dir}/${wget_script_name}" ]; then
-            echo "[ERROR] wget script does not exist"
-            # Echo the url for the wget script
-            echo "[ERROR] url: ${url}"
+        if grep -q "No files were found that matched the query" "${wget_scripts_dir}/${wget_script_name}"; then
+            echo "Removing ${wget_scripts_dir}/${wget_script_name} because it contains the string 'No files were found that matched the query'"
+            rm "${wget_scripts_dir}/${wget_script_name}"
         else
             echo "[INFO] wget script exists"
             echo "[INFO] url: ${url}"
