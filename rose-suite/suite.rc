@@ -1,7 +1,7 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        variable = "psl"
+        variable = "tas"
         experiment_id = "historical"
 
 [scheduling]
