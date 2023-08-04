@@ -59,6 +59,6 @@ for model in "${models[@]}"; do
     ERROR_FILE="${OUTPUT_DIR}/${model}_${variable_id}_clean_downloads.err"
 
     # Run the extractor script
-    sbatch -p short-serial -t 05:00 -o "${OUTPUT_FILE}" -e "${ERROR_FILE}" ${EXTRACTOR} ${variable_id} ${experiment_id} ${model}
+    sbatch -p short-serial -t 08:00 -o "${OUTPUT_FILE}" -e "${ERROR_FILE}" ${EXTRACTOR} ${variable_id} ${experiment_id} ${model}
 
 done
