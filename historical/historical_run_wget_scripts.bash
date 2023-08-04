@@ -34,7 +34,7 @@ data_node=$3
 
 # NorCPM1_esgf-data1.llnl.gov_tas.wget
 # Find the wget script
-wget_script="${wget_scripts_dir}/${model}_${data_node}_${variable_id}.wget"
+wget_script="${wget_scripts_dir}/${variable_id}/${model}_${data_node}_${variable_id}.wget"
 
 # Set the data directory
 data_dir="${data_dir}/${variable_id}/${model}/"
