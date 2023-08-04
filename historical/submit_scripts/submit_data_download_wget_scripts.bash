@@ -60,6 +60,6 @@ for model in "${models[@]}"; do
     ERROR_FILE="${OUTPUT_DIR}/${model}_${variable_id}_data_download_wget_scripts.err"
 
     # Run the extractor script
-    sbatch -p short-serial -t 02:00 -o "${OUTPUT_FILE}" -e "${ERROR_FILE}" ${EXTRACTOR} ${variable_id} ${experiment_id}
+    sbatch -p short-serial -t 02:00 -o "${OUTPUT_FILE}" -e "${ERROR_FILE}" ${EXTRACTOR} ${variable_id} ${experiment_id} ${model}
 
 done
