@@ -8,3 +8,7 @@ data_nodes=("esgf.ceda.ac.uk" "crd-esgf-drc.ec.gc.ca" "esgf-data1.llnl.gov" "esg
 wget_scripts_dir="/gws/nopw/j04/canari/users/benhutch/historical/wget_scripts"
 
 data_dir="/gws/nopw/j04/canari/users/benhutch/historical/data"
+
+openID="https://esgf-node.llnl.gov/esgf-idp/openid/benhutchins25"
+
+username="benhutchins25"

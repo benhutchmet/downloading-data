@@ -66,7 +66,7 @@ function display_duration() {
 echo "[INFO] running wget script: ${wget_script}"
 # then run the wget script
 script_start_time=$(date +%s)
-cd "${data_dir}" && bash "${wget_script}" -H
+cd "${data_dir}" && bash "${wget_script}" -s
 script_end_time=$(date +%s)
 script_duration=$((script_end_time-script_start_time))
 echo "[INFO] script duration: $(display_duration ${script_duration})"
