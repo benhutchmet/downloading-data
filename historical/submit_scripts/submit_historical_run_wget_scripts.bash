@@ -38,7 +38,7 @@ EXTRACTOR="/home/users/benhutch/downloading-data/historical/process_scripts/hist
 echo "[INFO] looping over the models and data nodes for the variable: ${variable_id}"
 
 # Loop over the models
-for model in "${historical_models[@]}"; do
+for model in "${models[@]}"; do
     
     # Echo the current model
     echo "[INFO] model: ${model}"
