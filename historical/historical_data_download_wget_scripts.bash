@@ -59,54 +59,39 @@ echo "[INFO] table_id: ${table_id}"
 # Echo the variable name
 echo "[INFO] looping over the models and data nodes for the variable: ${variable_id}"
 
-# Set up the models to be used depending on the experiment_id
-# if the experiment_id is historical then use the historical models
-# and the data nodes
-if [ "${experiment_id}" == "historical" ]; then
-    echo "[INFO] using the historical models"
-    models=("${historical_models[@]}")
-    data_nodes=("${data_nodes[@]}")
-else
+# Loop over the data nodes
+for data_node in "${nodes[@]}"; do
+    
+    # Echo the current data node
+    echo "[INFO] data node: ${data_node}"
 
+    # Construct the url            
+    url="https://esgf-data.dkrz.de/esg-search/wget?project=${project}&experiment_id=${experiment_id}&source_id=${model}&table_id=${table_id}&variable_id=${variable_id}&latest=${latest}&activity_id=${activity_id}&data_node=${data_node}&limit=${limit}"
 
+    # Echo the url
+    echo "[INFO] url: ${url}"
 
-# Loop over the models
-for model in "${models[@]}"; do
-    # Echo the current model
-    echo "[INFO] model: ${model}"
+    # Construct the wget script name
+    wget_script_name="${model}_${data_node}_${variable_id}.wget"
 
-    # Loop over the data nodes
-    for data_node in "${data_nodes[@]}"; do
-        # Echo the current data node
-        echo "[INFO] data node: ${data_node}"
+    # Echo the wget script name
+    echo "[INFO] wget script name: ${wget_script_name}"
 
-        # Construct the url            
-        url="https://esgf-data.dkrz.de/esg-search/wget?project=${project}&experiment_id=${experiment_id}&source_id=${model}&table_id=${table_id}&variable_id=${variable_id}&latest=${latest}&activity_id=${activity_id}&data_node=${data_node}&limit=${limit}"
+    # Download the wget script
+    wget -O "${wget_scripts_dir}/${wget_script_name}" "${url}"
 
-        # Echo the url
+    # Echo the wget script
+    echo "[INFO] wget script: ${wget_scripts_dir}/${wget_script_name}"
+
+    if grep -q "No files were found that matched the query" "${wget_scripts_dir}/${wget_script_name}"; then
+        echo "Removing ${wget_scripts_dir}/${wget_script_name} because it contains the string 'No files were found that matched the query'"
+        rm "${wget_scripts_dir}/${wget_script_name}"
+    else
+        echo "[INFO] wget script exists"
         echo "[INFO] url: ${url}"
 
-        # Construct the wget script name
-        wget_script_name="${model}_${data_node}_${variable_id}.wget"
+        # Make the wget script executable
+        chmod +x "${wget_scripts_dir}/${wget_script_name}"
+    fi
 
-        # Echo the wget script name
-        echo "[INFO] wget script name: ${wget_script_name}"
-
-        # Download the wget script
-        wget -O "${wget_scripts_dir}/${wget_script_name}" "${url}"
-
-        # Echo the wget script
-        echo "[INFO] wget script: ${wget_scripts_dir}/${wget_script_name}"
-
-        if grep -q "No files were found that matched the query" "${wget_scripts_dir}/${wget_script_name}"; then
-            echo "Removing ${wget_scripts_dir}/${wget_script_name} because it contains the string 'No files were found that matched the query'"
-            rm "${wget_scripts_dir}/${wget_script_name}"
-        else
-            echo "[INFO] wget script exists"
-            echo "[INFO] url: ${url}"
-
-            # Make the wget script executable
-            chmod +x "${wget_scripts_dir}/${wget_script_name}"
-        fi
-    done
 done
