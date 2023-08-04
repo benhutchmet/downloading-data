@@ -14,7 +14,7 @@ source "/home/users/benhutch/downloading-data/dictionaries.bash"
 if [ "$#" -ne 4 ]; then
     echo "Illegal number of arguments provided"
     echo "Usage: bash historical_run_wget_scripts.bash <variable> <model> <data_node> <experiment_id>"
-    echo "Example: bash historical_run_wget_scripts.bash tas NorCPM1 esgf-data1.llnl.gov"
+    echo "Example: bash historical_run_wget_scripts.bash tas NorCPM1 esgf-data1.llnl.gov historical"
     exit 1
 fi
 
@@ -22,8 +22,8 @@ fi
 # must be either: psl, sfcWind, tas or rsds
 if [ "$1" != "psl" ] && [ "$1" != "sfcWind" ] && [ "$1" != "tas" ] && [ "$1" != "rsds" ] && [ "$1" != "tos" ]; then
     echo "Invalid variable provided"
-    echo "Usage: bash historical_run_wget_scripts.bash <variable>"
-    echo "Example: bash historical_run_wget_scripts.bash tas"
+    echo "Usage: bash historical_run_wget_scripts.bash <variable> <model> <data_node> <experiment_id>"
+    echo "Example: bash historical_run_wget_scripts.bash tas NorCPM1 esgf-data1.llnl.gov historical"
     exit 1
 fi
 
@@ -31,13 +31,14 @@ fi
 variable_id=$1
 model=$2
 data_node=$3
+experiment_id=$4
 
 # NorCPM1_esgf-data1.llnl.gov_tas.wget
 # Find the wget script
-wget_script="${wget_scripts_dir}/${variable_id}/${model}_${data_node}_${variable_id}.wget"
+wget_script="${canari_dir}/${experiment_id}/${variable_id}/${model}/${model}_${data_node}_${variable_id}.wget"
 
 # Set the data directory
-data_dir="${data_dir}/${variable_id}/${model}/"
+data_dir="${canari_dir}/${experiment_id}/${variable_id}/${model}/data"
 mkdir -p "${data_dir}"
 
 # Check that the wget script exists

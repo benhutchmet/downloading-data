@@ -78,7 +78,7 @@ for data_node in "${nodes[@]}"; do
     echo "[INFO] wget script name: ${wget_script_name}"
 
     # Download the wget script
-    wget -O "${wget_scripts_dir}/${wget_script_name}" "${url}"
+    wget -O "${canari_dir}/${experiment_id}/${variable_id}/${model}/${wget_script_name}" "${url}"
 
     # Echo the wget script
     echo "[INFO] wget script: ${wget_scripts_dir}/${wget_script_name}"
