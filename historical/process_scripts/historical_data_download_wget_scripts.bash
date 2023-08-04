@@ -87,7 +87,7 @@ for data_node in "${nodes[@]}"; do
     echo "[INFO] wget script: ${wget_script}"
 
     if grep -q "No files were found that matched the query" "${wget_script}" ; then
-        echo "Removing ${wget_scripts_dir}/${wget_script_name} because it contains the string 'No files were found that matched the query'"
+        echo "Removing ${wget_script} because it contains the string 'No files were found that matched the query'"
         rm "${wget_script}"
     else
         echo "[INFO] wget script exists"
