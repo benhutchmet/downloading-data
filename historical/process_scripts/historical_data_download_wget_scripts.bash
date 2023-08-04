@@ -10,8 +10,8 @@
 # Source the dictionaries file
 source "/home/users/benhutch/downloading-data/dictionaries.bash"
 
-# Echo the historical models
-echo "The historical models are: ${historical_models[@]}"
+# Echo all of the models to try extracting the data from
+echo "The models are: ${models[@]}"
 
 # Echo the data nodes which we will try extracting the data from
 echo "The data nodes are: ${data_nodes[@]}"
