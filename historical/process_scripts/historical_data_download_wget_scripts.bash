@@ -78,21 +78,23 @@ for data_node in "${nodes[@]}"; do
     # Echo the wget script name
     echo "[INFO] wget script name: ${wget_script_name}"
 
+    wget_script="${canari_dir}/${experiment_id}/${variable_id}/${model}/${wget_script_name}"
+
     # Download the wget script
-    wget -O "${canari_dir}/${experiment_id}/${variable_id}/${model}/${wget_script_name}" "${url}"
+    wget -O "${wget_script}" "${url}"
 
     # Echo the wget script
-    echo "[INFO] wget script: ${wget_scripts_dir}/${wget_script_name}"
+    echo "[INFO] wget script: ${wget_script}"
 
-    if grep -q "No files were found that matched the query" "${wget_scripts_dir}/${wget_script_name}"; then
+    if grep -q "No files were found that matched the query" "${wget_script}" ; then
         echo "Removing ${wget_scripts_dir}/${wget_script_name} because it contains the string 'No files were found that matched the query'"
-        rm "${wget_scripts_dir}/${wget_script_name}"
+        rm "${wget_script}"
     else
         echo "[INFO] wget script exists"
         echo "[INFO] url: ${url}"
 
         # Make the wget script executable
-        chmod +x "${wget_scripts_dir}/${wget_script_name}"
+        chmod +x "${wget_script}"
     fi
 
 done
