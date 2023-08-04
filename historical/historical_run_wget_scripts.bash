@@ -2,18 +2,18 @@
 #
 # Runs the wget scripts to download the historical data
 #
-# Usage: bash historical_run_wget_scripts.bash <variable> <model> <data_node>
+# Usage: bash historical_run_wget_scripts.bash <variable> <model> <data_node> <experiment_id>
 #
-# Example: bash historical_run_wget_scripts.bash tas NorCPM1 esgf-data1.llnl.gov
+# Example: bash historical_run_wget_scripts.bash tas NorCPM1 esgf-data1.llnl.gov historical
 #
 
 # Source the dictionaries
 source "/home/users/benhutch/downloading-data/dictionaries.bash"
 
 # Check that the correct number of arguments were provided
-if [ "$#" -ne 3 ]; then
+if [ "$#" -ne 4 ]; then
     echo "Illegal number of arguments provided"
-    echo "Usage: bash historical_run_wget_scripts.bash <variable> <model> <data_node>"
+    echo "Usage: bash historical_run_wget_scripts.bash <variable> <model> <data_node> <experiment_id>"
     echo "Example: bash historical_run_wget_scripts.bash tas NorCPM1 esgf-data1.llnl.gov"
     exit 1
 fi

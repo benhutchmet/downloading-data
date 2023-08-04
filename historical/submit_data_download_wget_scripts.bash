@@ -52,7 +52,8 @@ for model in "${models[@]}"; do
     echo "[INFO] model: ${model}"
 
     # Set up the output directory for the LOTUS scripts
-    OUTPUT_DIR="${wget_scripts_dir}/${variable_id}/${model}/lotus-output"
+    OUTPUT_DIR="${canari_dir}/${experiment_id}/${variable_id}/${model}/lotus-output"
+    mkdir -p "${OUTPUT_DIR}"
 
     # Set up the output and error files
     OUTPUT_FILE="${OUTPUT_DIR}/${model}_${variable_id}_data_download_wget_scripts.out"

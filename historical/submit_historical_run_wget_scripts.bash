@@ -2,19 +2,19 @@
 #
 # Submits the wget scripts to download the historical data
 #
-# Usage: bash historical_submit_historical_data_download_wget_scripts.bash <variable>
+# Usage: bash historical_submit_historical_data_download_wget_scripts.bash <variable> <experiment_id>
 #
-# Example: bash historical_submit_historical_data_download_wget_scripts.bash tas
+# Example: bash historical_submit_historical_data_download_wget_scripts.bash tas historical
 #
 
 # Source the dictionaries
 source "/home/users/benhutch/downloading-data/dictionaries.bash"
 
 # Check that the correct number of arguments were provided
-if [ "$#" -ne 1 ]; then
+if [ "$#" -ne 2 ]; then
     echo "Illegal number of arguments provided"
-    echo "Usage: bash historical_submit_historical_data_download_wget_scripts.bash <variable>"
-    echo "Example: bash historical_submit_historical_data_download_wget_scripts.bash tas"
+    echo "Usage: bash historical_submit_historical_data_download_wget_scripts.bash <variable> <experiment_id>"
+    echo "Example: bash historical_submit_historical_data_download_wget_scripts.bash tas historical"
     exit 1
 fi
 
@@ -22,8 +22,8 @@ fi
 # must be either: psl, sfcWind, tas or rsds
 if [ "$1" != "psl" ] && [ "$1" != "sfcWind" ] && [ "$1" != "tas" ] && [ "$1" != "rsds" ] && [ "$1" != "tos" ]; then
     echo "Invalid variable provided"
-    echo "Usage: bash historical_submit_historical_data_download_wget_scripts.bash <variable>"
-    echo "Example: bash historical_submit_historical_data_download_wget_scripts.bash tas"
+    echo "Usage: bash historical_submit_historical_data_download_wget_scripts.bash <variable> <experiment_id>"
+    echo "Example: bash historical_submit_historical_data_download_wget_scripts.bash tas historical"
     exit 1
 fi
 
@@ -38,6 +38,7 @@ echo "[INFO] looping over the models and data nodes for the variable: ${variable
 
 # Loop over the models
 for model in "${historical_models[@]}"; do
+    
     # Echo the current model
     echo "[INFO] model: ${model}"
 
@@ -58,4 +59,5 @@ for model in "${historical_models[@]}"; do
     sbatch -p short-serial -t 15:00 -o "${OUTPUT_FILE}" -e "${ERROR_FILE}" ${EXTRACTOR} ${variable_id} ${model} ${data_node}
 
     done
+
 done
