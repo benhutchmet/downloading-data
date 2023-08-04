@@ -2,9 +2,9 @@
 
 # Script for downloading the wget scripts for historical data from the ESGF server
 #
-# Usage: bash historical_data_download_wget_scripts.bash <variable>
+# Usage: bash historical_data_download_wget_scripts.bash <variable> <experiment_id>
 #
-# Example: bash historical_data_download_wget_scripts.bash tas
+# Example: bash historical_data_download_wget_scripts.bash tas historical
 #
 
 # Source the dictionaries file
@@ -35,6 +35,8 @@ fi
 
 # Extract the variable name from the command line argument
 variable_id=$1
+
+# experiment_id="dcppA-hindcast"
 
 # Set up the constants for the url to be used
 activity_id="CMIP"
