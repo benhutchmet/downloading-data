@@ -48,6 +48,7 @@ for model in "${historical_models[@]}"; do
 
     # Set up the output directory
     OUTPUT_DIR="${wget_scripts_dir}/${variable_id}/${model}/lotus-output"
+    mkdir -p "${OUTPUT_DIR}"
 
     # Set up the output and error files
     OUTPUT_FILE="${OUTPUT_DIR}/${model}_${data_node}_${variable_id}_run_wget_scripts.out"
