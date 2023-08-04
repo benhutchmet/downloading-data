@@ -17,10 +17,10 @@ echo "The models are: ${models[@]}"
 echo "The data nodes are: ${data_nodes[@]}"
 
 # Check that the correct number of arguments were provided
-if [ "$#" -ne 1 ]; then
+if [ "$#" -ne 2 ]; then
     echo "Illegal number of arguments provided"
-    echo "Usage: bash historical_data_download_wget_scripts.bash <variable>"
-    echo "Example: bash historical_data_download_wget_scripts.bash tas"
+    echo "Usage: bash historical_data_download_wget_scripts.bash <variable> <experiment_id>"
+    echo "Example: bash historical_data_download_wget_scripts.bash tas historical"
     exit 1
 fi
 
@@ -28,8 +28,8 @@ fi
 # must be either: psl, sfcWind, tas or rsds
 if [ "$1" != "psl" ] && [ "$1" != "sfcWind" ] && [ "$1" != "tas" ] && [ "$1" != "rsds" ] && [ "$1" != "tos" ]; then
     echo "Invalid variable provided"
-    echo "Usage: bash historical_data_download_wget_scripts.bash <variable>"
-    echo "Example: bash historical_data_download_wget_scripts.bash tas"
+    echo "Usage: bash historical_data_download_wget_scripts.bash <variable> <experiment_id>"
+    echo "Example: bash historical_data_download_wget_scripts.bash tas historical"
     exit 1
 fi
 
@@ -46,7 +46,7 @@ table_id="Amon"
 limit="10000"
 
 # Echo the string we are looking for
-echo "[INFO] models: ${historical_models[@]}"
+echo "[INFO] models: ${models[@]}"
 echo "[INFO] data nodes: ${data_nodes[@]}"
 echo "[INFO] variable: ${variable_id}"
 echo "[INFO] activity_id: ${activity_id}"
