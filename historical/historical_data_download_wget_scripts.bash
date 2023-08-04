@@ -34,15 +34,14 @@ if [ "$1" != "psl" ] && [ "$1" != "sfcWind" ] && [ "$1" != "tas" ] && [ "$1" != 
 fi
 
 # Extract the variable name from the command line argument
+# Also extract the experiment_id
 variable_id=$1
-
-# experiment_id="dcppA-hindcast"
+experiment_id=$2
 
 # Set up the constants for the url to be used
 activity_id="CMIP"
 latest="true"
 project="CMIP6"
-experiment_id="historical"
 table_id="Amon"
 limit="10000"
 
@@ -60,8 +59,19 @@ echo "[INFO] table_id: ${table_id}"
 # Echo the variable name
 echo "[INFO] looping over the models and data nodes for the variable: ${variable_id}"
 
+# Set up the models to be used depending on the experiment_id
+# if the experiment_id is historical then use the historical models
+# and the data nodes
+if [ "${experiment_id}" == "historical" ]; then
+    echo "[INFO] using the historical models"
+    models=("${historical_models[@]}")
+    data_nodes=("${data_nodes[@]}")
+else
+
+
+
 # Loop over the models
-for model in "${historical_models[@]}"; do
+for model in "${models[@]}"; do
     # Echo the current model
     echo "[INFO] model: ${model}"
 
