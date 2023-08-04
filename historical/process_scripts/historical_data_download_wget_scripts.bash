@@ -2,9 +2,9 @@
 
 # Script for downloading the wget scripts for historical data from the ESGF server
 #
-# Usage: bash historical_data_download_wget_scripts.bash <variable> <experiment_id>
+# Usage: bash historical_data_download_wget_scripts.bash <variable> <experiment_id> <model>
 #
-# Example: bash historical_data_download_wget_scripts.bash tas historical
+# Example: bash historical_data_download_wget_scripts.bash tas historical BCC-CSM2-MR
 #
 
 # Source the dictionaries file
@@ -17,10 +17,10 @@ echo "The models are: ${models[@]}"
 echo "The data nodes are: ${data_nodes[@]}"
 
 # Check that the correct number of arguments were provided
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
     echo "Illegal number of arguments provided"
-    echo "Usage: bash historical_data_download_wget_scripts.bash <variable> <experiment_id>"
-    echo "Example: bash historical_data_download_wget_scripts.bash tas historical"
+    echo "Usage: bash historical_data_download_wget_scripts.bash <variable> <experiment_id> <model>"
+    echo "Example: bash historical_data_download_wget_scripts.bash tas historical BCC-CSM2-MR"
     exit 1
 fi
 
@@ -28,8 +28,8 @@ fi
 # must be either: psl, sfcWind, tas or rsds
 if [ "$1" != "psl" ] && [ "$1" != "sfcWind" ] && [ "$1" != "tas" ] && [ "$1" != "rsds" ] && [ "$1" != "tos" ]; then
     echo "Invalid variable provided"
-    echo "Usage: bash historical_data_download_wget_scripts.bash <variable> <experiment_id>"
-    echo "Example: bash historical_data_download_wget_scripts.bash tas historical"
+    echo "Usage: bash historical_data_download_wget_scripts.bash <variable> <experiment_id> <model>"
+    echo "Example: bash historical_data_download_wget_scripts.bash tas historical BCC-CSM2-MR"
     exit 1
 fi
 
@@ -57,7 +57,7 @@ echo "[INFO] table_id: ${table_id}"
 
 
 # Echo the variable name
-echo "[INFO] looping over the models and data nodes for the variable: ${variable_id}"
+echo "[INFO] looping over the models and data nodes for the variable: ${variable_id} and experiment_id: ${experiment_id} and model: ${model}"
 
 # Loop over the data nodes
 for data_node in "${nodes[@]}"; do
