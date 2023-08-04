@@ -55,7 +55,7 @@ for model in "${historical_models[@]}"; do
     ERROR_FILE="${OUTPUT_DIR}/${model}_${data_node}_${variable_id}_run_wget_scripts.err"
 
     # Run the extractor script
-    sbatch -p short-serial -t 10:00 -o "${OUTPUT_FILE}" -e "${ERROR_FILE}" ${EXTRACTOR} ${variable_id} ${model} ${data_node}
+    sbatch -p short-serial -t 15:00 -o "${OUTPUT_FILE}" -e "${ERROR_FILE}" ${EXTRACTOR} ${variable_id} ${model} ${data_node}
 
     done
 done
