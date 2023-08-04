@@ -37,6 +37,7 @@ fi
 # Also extract the experiment_id
 variable_id=$1
 experiment_id=$2
+model=$3
 
 # Set up the constants for the url to be used
 activity_id="CMIP"
