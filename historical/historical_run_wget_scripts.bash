@@ -38,6 +38,7 @@ wget_script="${wget_scripts_dir}/${variable_id}/${model}_${data_node}_${variable
 
 # Set the data directory
 data_dir="${data_dir}/${variable_id}/${model}/"
+mkdir -p "${data_dir}"
 
 # Check that the wget script exists
 if [ ! -f "${wget_script}" ]; then
