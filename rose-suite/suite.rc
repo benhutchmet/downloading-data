@@ -1,14 +1,15 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        counter = 1..20
+        variable = "psl"
+        experiment_id = "historical"
 
 [scheduling]
     [[dependencies]]
         graph = """
-            initialise => step1
-            step1 => batch<counter>
-            batch<counter> => finish"""
+            download_scripts<variable><experiment_id> => run_scripts<variable><experiment_id>
+            run_scripts<variable><experiment_id> => clean_data<variable><experiment_id>
+        """
 
 [runtime]
     [[root]]
@@ -16,21 +17,24 @@
         pre-script="""set -eu"""
         [[[job]]]
             batch system = slurm
-            execution time limit = PT5M
+            execution time limit = PT15M
         [[[directives]]]
-            --partition = workshop
-            --account = workshop
-            --time = 05:00
-    [[initialise]]
-        script = """echo 'do something'"""
-    [[step1]]
-        script = """echo 'set something'
-echo 'cd somewhere/'
-echo 'run something'"""
-    [[batch<counter>]]
-        script = """echo 'do something'
-echo 'run something with counter variable: ${CYLC_TASK_PARAM_counter}'
-expr 100 + ${CYLC_TASK_PARAM_counter}  # EXAMPLE: evaluate 100 + counter value"""
-    [[finish]]
-        script = """echo 'to sum up'
-echo 'Do final thing'"""
+            --partition = short-serial
+    [[download_scripts<variable><experiment_id>]]
+        script = """
+            module load jaspy
+            cd ${CYLC_SUITE_RUN_DIR}/
+            bash submit_data_download_wget_scripts.bash ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment_id}
+        """
+    [[run_scripts<variable><experiment_id>]]
+        script = """
+            module load jaspy
+            cd ${CYLC_SUITE_RUN_DIR}/
+            bash submit_historical_run_wget_scripts.bash ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment_id}
+        """
+    [[clean_data<variable><experiment_id>]]
+        script = """
+            module load jaspy
+            cd ${CYLC_SUITE_RUN_DIR}/
+            bash submit_clean_downloads.bash ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment_id}
+        """
