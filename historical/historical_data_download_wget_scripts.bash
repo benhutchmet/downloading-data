@@ -67,10 +67,7 @@ for model in "${historical_models[@]}"; do
         # Echo the current data node
         echo "[INFO] data node: ${data_node}"
 
-        # Construct the url
-        # based on:
-        #url="https://esgf-data.dkrz.de/esg-search/wget?project=$project&experiment_id=$experiment_id&source_id=$model&table_id=$table_id&variable_id=$variable_id&limit=$limit&data_node=$node"
-            
+        # Construct the url            
         url="https://esgf-data.dkrz.de/esg-search/wget?project=${project}&experiment_id=${experiment_id}&source_id=${model}&table_id=${table_id}&variable_id=${variable_id}&latest=${latest}&activity_id=${activity_id}&data_node=${data_node}"
 
         # Echo the url
