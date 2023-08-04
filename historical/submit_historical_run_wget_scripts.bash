@@ -57,3 +57,4 @@ for model in "${historical_models[@]}"; do
     sbatch -p short-serial -t 10:00 -o "${OUTPUT_FILE}" -e "${ERROR_FILE}" ${EXTRACTOR} ${variable_id} ${model} ${data_node}
 
     done
+done
