@@ -23,4 +23,6 @@ test_node=("crd-esgf-drc.ec.gc.ca")
 
 test_node_it=("esgf-node2.cmcc.it")
 
+test_node_llnl=("esgf-data1.llnl.gov")
+
 nodes=($(echo "${all_nodes[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))

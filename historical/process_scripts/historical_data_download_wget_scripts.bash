@@ -61,7 +61,7 @@ echo "[INFO] table_id: ${table_id}"
 echo "[INFO] looping over the models and data nodes for the variable: ${variable_id} and experiment_id: ${experiment_id} and model: ${model}"
 
 # Loop over the data nodes
-for data_node in "${test_node_it[@]}"; do
+for data_node in "${test_node_llnl[@]}"; do
     
     # Echo the current data node
     echo "[INFO] data node: ${data_node}"
