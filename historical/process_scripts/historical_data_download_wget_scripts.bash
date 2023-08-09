@@ -44,7 +44,7 @@ activity_id="CMIP"
 latest="true"
 project="CMIP6"
 table_id="Amon"
-# limit="10000"
+limit="10000"
 
 # Echo the string we are looking for
 echo "[INFO] models: ${models[@]}"
@@ -61,7 +61,7 @@ echo "[INFO] table_id: ${table_id}"
 echo "[INFO] looping over the models and data nodes for the variable: ${variable_id} and experiment_id: ${experiment_id} and model: ${model}"
 
 # Loop over the data nodes
-for data_node in "${all_nodes[@]}"; do
+for data_node in "${test_node[@]}"; do
     
     # Echo the current data node
     echo "[INFO] data node: ${data_node}"
@@ -73,7 +73,7 @@ for data_node in "${all_nodes[@]}"; do
     echo "[INFO] url: ${url}"
 
     # Construct the wget script name
-    wget_script_name="${model}_${data_node}_${variable_id}.wget"
+    wget_script_name="${model}_${data_node}_${variable_id}.bash"
 
     # Echo the wget script name
     echo "[INFO] wget script name: ${wget_script_name}"

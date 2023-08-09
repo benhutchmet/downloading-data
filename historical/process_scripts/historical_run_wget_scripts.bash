@@ -35,7 +35,7 @@ experiment_id=$4
 
 # NorCPM1_esgf-data1.llnl.gov_tas.wget
 # Find the wget script
-wget_script="${canari_dir}/${experiment_id}/${variable_id}/${model}/${model}_${data_node}_${variable_id}.wget"
+wget_script="${canari_dir}/${experiment_id}/${variable_id}/${model}/${model}_${data_node}_${variable_id}.bash"
 
 # Set the data directory
 data_dir="${canari_dir}/${experiment_id}/${variable_id}/${model}/data"
