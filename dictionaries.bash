@@ -19,4 +19,6 @@ models=("BCC-CSM2-MR" "MPI-ESM1-2-HR" "CanESM5" "CMCC-CM2-SR5" "HadGEM3-GC31-MM"
 
 all_nodes=("esgf.ceda.ac.uk" "crd-esgf-drc.ec.gc.ca" "esgf-data1.llnl.gov" "esgf1.dkrz.de" "noresg.nird.sigma2.no" "esg-dn1.nsc.liu.se" "esgf-data.ucar.edu" "vesg.ipsl.upmc.fr" "esgf-data02.diasjp.net" "esg1.umr-cnrm.fr" "esg.lasg.ac.cn" "esgf.dwd.de" "esgf-data03.diasjp.net" "esgf-data.ucar.edu" "vesg.ipsl.upmc.fr" "esgf-data02.diasjp.net" "esg.lasg.ac.cn" "cmip.bcc.cma.cn" "esgf3.dkrz.de" "crd-esgf-drc.ec.gc.ca" "esgf-node2.cmcc.it" "esgf.bsc.es" "esgf-data.ucar.edu" "esg.lasg.ac.cn" "esgf-data1.llnl.gov")
 
+test_node=("crd-esgf-drc.ec.gc.ca")
+
 nodes=($(echo "${all_nodes[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))

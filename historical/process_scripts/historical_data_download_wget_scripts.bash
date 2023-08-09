@@ -44,7 +44,7 @@ activity_id="CMIP"
 latest="true"
 project="CMIP6"
 table_id="Amon"
-limit="10000"
+# limit="10000"
 
 # Echo the string we are looking for
 echo "[INFO] models: ${models[@]}"
@@ -67,7 +67,7 @@ for data_node in "${all_nodes[@]}"; do
     echo "[INFO] data node: ${data_node}"
 
     # Construct the url            
-    url="https://esgf-data.dkrz.de/esg-search/wget?project=${project}&experiment_id=${experiment_id}&source_id=${model}&table_id=${table_id}&variable_id=${variable_id}&latest=${latest}&activity_id=${activity_id}&data_node=${data_node}&limit=${limit}"
+    url="https://esgf-data.dkrz.de/esg-search/wget?project=${project}&experiment_id=${experiment_id}&source_id=${model}&table_id=${table_id}&variable_id=${variable_id}&latest=${latest}&data_node=${data_node}&limit=${limit}"
 
     # Echo the url
     echo "[INFO] url: ${url}"
