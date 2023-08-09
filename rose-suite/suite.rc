@@ -1,8 +1,8 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        variable = "tas"
-        experiment_id = "historical"
+        variable = "sfcWind"
+        experiment_id = "dcppA-hindcast"
 
 [scheduling]
     [[dependencies]]
