@@ -21,4 +21,6 @@ all_nodes=("esgf.ceda.ac.uk" "crd-esgf-drc.ec.gc.ca" "esgf-data1.llnl.gov" "esgf
 
 test_node=("crd-esgf-drc.ec.gc.ca")
 
+test_node_it=("esgf-node2.cmcc.it")
+
 nodes=($(echo "${all_nodes[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
