@@ -6,7 +6,7 @@
 #
 # Example: bash historical_run_wget_scripts.bash tas NorCPM1 esgf-data1.llnl.gov historical
 #
-# nohup bash historical/process_scripts/historical_run_wget_scripts.bash sfcWind CMCC-CM2-SR5 esgf-data1.llnl.gov dcppA-hindcast > output.log 2> error.log &
+# nohup bash historical/process_scripts/historical_run_wget_scripts.bash sfcWind CMCC-CM2-SR5 esgf-data1.llnl.gov dcppA-hindcast > output_CMCC.log 2> error_CMCC.log &
 
 # Source the dictionaries
 source "/home/users/benhutch/downloading-data/dictionaries.bash"
