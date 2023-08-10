@@ -2,24 +2,10 @@
 
 # Usage: bash move_from_xfc_to_canari.bash <model> <variable> <experiment>
 
-# for example: bash move_from_xfc_to_canari.bash HadGEM3-GC31-MM
+# for example: bash move_from_xfc_to_canari.bash HadGEM3-GC31-MM psl dcppA-hindcast
+# nohup bash move_from_xfc_to_canari.bash HadGEM3-GC31-MM > output_HadGEM.log &
 
 # This script moves the files from the xfc directory to the canari directory
-
-
-# elif [ "$model" == "MPI-ESM1-2-LR" ] || [ "$model" == "FGOALS-f3-L" ] || [ "$model" == "MIROC6" ] || [ "$model" == "IPSL-CM6A-LR" ] || [ "$model" == "CESM1-1-CAM5-CMIP5" ] || [ "$model" == "NorCPM1" ]; then
-#     # set up the input files from xfc
-#     # check that this returns the files
-#     files="/work/xfc/vol5/user_cache/benhutch/$model_group/$model/psl_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*p*f*_g*_*.nc"
-#     # if the model is HadGEM3 or EC-Earth3
-#     elif [ "$model" == "HadGEM3-GC31-MM" ] || [ "$model" == "EC-Earth3" ]; then
-#     # set up the input files
-#     # MOVE THESE FROM SCRATCH TO CANARI
-#     files="/work/scratch-nopw2/benhutch/psl/${model}/outputs/mergetime/psl_Amon_${model}_dcppA-hindcast_s${year}-r${run}i*.nc"
-#     else
-#     echo "[ERROR] Model not recognised for variable psl"
-#     exit 1
-#     fi
 
 # Check that the no of args is correct
 if [ $# -ne 3 ]; then
