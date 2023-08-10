@@ -43,9 +43,20 @@ for model in "${models[@]}"; do
     # Echo the current model
     echo "[INFO] model: ${model}"
 
-    # Loop over the data nodes
-    for data_node in "${data_nodes[@]}"; do
-    # Echo the current data node
+    # Find the valid (not empty) data nodes for this model
+    # and select the largest one
+    # Will be in this directory
+    # /gws/nopw/j04/canari/users/benhutch/dcppA-hindcast/sfcWind/BCC-CSM2-MR
+    # define the wget script directory
+    wget_script_dir="/gws/nopw/j04/canari/users/benhutch/${experiment_id}/${variable_id}/${model}"
+
+    # find the largest file in this directory
+    largest_file=$(ls -S "${wget_script_dir}" | head -n 1)
+
+    # find the data node that this file is on
+    data_node=$(echo "${largest_file}" | cut -d'_' -f1)
+
+    # Echo the data node
     echo "[INFO] data node: ${data_node}"
 
     # Set up the output directory
@@ -57,8 +68,6 @@ for model in "${models[@]}"; do
     ERROR_FILE="${OUTPUT_DIR}/${model}_${data_node}_${variable_id}_run_wget_scripts.err"
 
     # Run the extractor script
-    sbatch -p short-serial -t 15:00 -o "${OUTPUT_FILE}" -e "${ERROR_FILE}" ${EXTRACTOR} ${variable_id} ${model} ${data_node} ${experiment_id}
-
-    done
+    sbatch -p short-serial -t 02:00:00 -o "${OUTPUT_FILE}" -e "${ERROR_FILE}" ${EXTRACTOR} ${variable_id} ${model} ${data_node} ${experiment_id}
 
 done
