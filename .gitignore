@@ -1,2 +1,5 @@
 log*
 *.log
+output_log/*
+error_log/*
+
