@@ -43,7 +43,7 @@ model=$3
 activity_id="CMIP"
 latest="true"
 project="CMIP6"
-table_id="Amon"
+table_id="Omon"
 limit="10000"
 
 # Echo the string we are looking for
