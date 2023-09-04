@@ -1,0 +1,54 @@
+# Running historical wget scripts for the following models
+# tas_models = ["BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+
+
+# for the ua models first
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua BCC-CSM2-MR esgf.ceda.ac.uk historical > output_log/historical_run_wget_scripts_BCC-CSM2-MR_esgf.ceda.ac.uk_ua.out 2> error_log/historical_run_wget_scripts_BCC-CSM2-MR_esgf.ceda.ac.uk_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua MPI-ESM1-2-HR esgf3.dkrz.de historical > output_log/historical_run_wget_scripts_MPI-ESM1-2-HR_esgf3.dkrz.de_ua.out 2> error_log/historical_run_wget_scripts_MPI-ESM1-2-HR_esgf3.dkrz.de_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua CanESM5 crd-esgf-drc.ec.gc.ca historical > output_log/historical_run_wget_scripts_CanESM5_crd-esgf-drc.ec.gc.ca_ua.out 2> error_log/historical_run_wget_scripts_CanESM5_crd-esgf-drc.ec.gc.ca_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua CMCC-CM2-SR5 esgf-node2.cmcc.it historical > output_log/historical_run_wget_scripts_CMCC-CM2-SR5_esgf-node2.cmcc.it_ua.out 2> error_log/historical_run_wget_scripts_CMCC-CM2-SR5_esgf-node2.cmcc.it_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua CMCC-CM2-SR5 esgf-data1.llnl.gov historical > output_log/historical_run_wget_scripts_CMCC-CM2-SR5_esgf-data1.llnl.gov_ua.out 2> error_log/historical_run_wget_scripts_CMCC-CM2-SR5_esgf-data1.llnl.gov_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua HadGEM3-GC31-MM esgf.ceda.ac.uk historical > output_log/historical_run_wget_scripts_HadGEM3-GC31-MM_esgf.ceda.ac.uk_ua.out 2> error_log/historical_run_wget_scripts_HadGEM3-GC31-MM_esgf.ceda.ac.uk_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua EC-Earth3 esgf.bsc.es historical > output_log/historical_run_wget_scripts_EC-Earth3_esgf.bsc.es_ua.out 2> error_log/historical_run_wget_scripts_EC-Earth3_esgf.bsc.es_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua EC-Earth3 esgf.ceda.ac.uk historical > output_log/historical_run_wget_scripts_EC-Earth3_esgf.ceda.ac.uk_ua.out 2> error_log/historical_run_wget_scripts_EC-Earth3_esgf.ceda.ac.uk_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua FGOALS-f3-L esg.lasg.ac.cn historical > output_log/historical_run_wget_scripts_FGOALS-f3-L_esg.lasg.ac.cn_ua.out 2> error_log/historical_run_wget_scripts_FGOALS-f3-L_esg.lasg.ac.cn_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua MIROC6 esgf-data02.diasjp.net historical > output_log/historical_run_wget_scripts_MIROC6_esgf-data02.diasjp.net_ua.out 2> error_log/historical_run_wget_scripts_MIROC6_esgf-data02.diasjp.net_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua IPSL-CM6A-LR vesg.ipsl.upmc.fr historical > output_log/historical_run_wget_scripts_IPSL-CM6A-LR_vesg.ipsl.upmc.fr_ua.out 2> error_log/historical_run_wget_scripts_IPSL-CM6A-LR_vesg.ipsl.upmc.fr_ua.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua NorCPM1 noresg.nird.sigma2.no historical > output_log/historical_run_wget_scripts_NorCPM1_noresg.nird.sigma2.no_ua.out 2> error_log/historical_run_wget_scripts_NorCPM1_noresg.nird.sigma2.no_ua.err &
+
+# for the va models
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va BCC-CSM2-MR esgf.ceda.ac.uk historical > output_log/historical_run_wget_scripts_BCC-CSM2-MR_esgf.ceda.ac.uk_va.out 2> error_log/historical_run_wget_scripts_BCC-CSM2-MR_esgf.ceda.ac.uk_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va MPI-ESM1-2-HR esgf3.dkrz.de historical > output_log/historical_run_wget_scripts_MPI-ESM1-2-HR_esgf3.dkrz.de_va.out 2> error_log/historical_run_wget_scripts_MPI-ESM1-2-HR_esgf3.dkrz.de_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va CanESM5 crd-esgf-drc.ec.gc.ca historical > output_log/historical_run_wget_scripts_CanESM5_crd-esgf-drc.ec.gc.ca_va.out 2> error_log/historical_run_wget_scripts_CanESM5_crd-esgf-drc.ec.gc.ca_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va CMCC-CM2-SR5 esgf-node2.cmcc.it historical > output_log/historical_run_wget_scripts_CMCC-CM2-SR5_esgf-node2.cmcc.it_va.out 2> error_log/historical_run_wget_scripts_CMCC-CM2-SR5_esgf-node2.cmcc.it_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va CMCC-CM2-SR5 esgf-data1.llnl.gov historical > output_log/historical_run_wget_scripts_CMCC-CM2-SR5_esgf-data1.llnl.gov_va.out 2> error_log/historical_run_wget_scripts_CMCC-CM2-SR5_esgf-data1.llnl.gov_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va HadGEM3-GC31-MM esgf.ceda.ac.uk historical > output_log/historical_run_wget_scripts_HadGEM3-GC31-MM_esgf.ceda.ac.uk_va.out 2> error_log/historical_run_wget_scripts_HadGEM3-GC31-MM_esgf.ceda.ac.uk_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va EC-Earth3 esgf.bsc.es historical > output_log/historical_run_wget_scripts_EC-Earth3_esgf.bsc.es_va.out 2> error_log/historical_run_wget_scripts_EC-Earth3_esgf.bsc.es_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va EC-Earth3 esgf.ceda.ac.uk historical > output_log/historical_run_wget_scripts_EC-Earth3_esgf.ceda.ac.uk_va.out 2> error_log/historical_run_wget_scripts_EC-Earth3_esgf.ceda.ac.uk_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va FGOALS-f3-L esg.lasg.ac.cn historical > output_log/historical_run_wget_scripts_FGOALS-f3-L_esg.lasg.ac.cn_va.out 2> error_log/historical_run_wget_scripts_FGOALS-f3-L_esg.lasg.ac.cn_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va MIROC6 esgf-data02.diasjp.net historical > output_log/historical_run_wget_scripts_MIROC6_esgf-data02.diasjp.net_va.out 2> error_log/historical_run_wget_scripts_MIROC6_esgf-data02.diasjp.net_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va IPSL-CM6A-LR vesg.ipsl.upmc.fr historical > output_log/historical_run_wget_scripts_IPSL-CM6A-LR_vesg.ipsl.upmc.fr_va.out 2> error_log/historical_run_wget_scripts_IPSL-CM6A-LR_vesg.ipsl.upmc.fr_va.err &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va NorCPM1 noresg.nird.sigma2.no historical > output_log/historical_run_wget_scripts_NorCPM1_noresg.nird.sigma2.no_va.out 2> error_log/historical_run_wget_scripts_NorCPM1_noresg.nird.sigma2.no_va.err &
+

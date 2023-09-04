@@ -1,0 +1,48 @@
+# commands to run the download scripts for historical data
+# tas_models = ["BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical BCC-CSM2-MR > output_log/historical_data_download_wget_scripts_bash_ua_BCC-CSM2-MR.out 2> error_log/historical_data_download_wget_scripts_bash_ua_BCC-CSM2-MR.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical MPI-ESM1-2-HR > output_log/historical_data_download_wget_scripts_bash_ua_MPI-ESM1-2-HR.out 2> error_log/historical_data_download_wget_scripts_bash_ua_MPI-ESM1-2-HR.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical CanESM5 > output_log/historical_data_download_wget_scripts_bash_ua_CanESM5.out 2> error_log/historical_data_download_wget_scripts_bash_ua_CanESM5.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical CMCC-CM2-SR5 > output_log/historical_data_download_wget_scripts_bash_ua_CMCC-CM2-SR5.out 2> error_log/historical_data_download_wget_scripts_bash_ua_CMCC-CM2-SR5.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical HadGEM3-GC31-MM > output_log/historical_data_download_wget_scripts_bash_ua_HadGEM3-GC31-MM.out 2> error_log/historical_data_download_wget_scripts_bash_ua_HadGEM3-GC31-MM.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical EC-Earth3 > output_log/historical_data_download_wget_scripts_bash_ua_EC-Earth3.out 2> error_log/historical_data_download_wget_scripts_bash_ua_EC-Earth3.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical FGOALS-f3-L > output_log/historical_data_download_wget_scripts_bash_ua_FGOALS-f3-L.out 2> error_log/historical_data_download_wget_scripts_bash_ua_FGOALS-f3-L.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical MIROC6 > output_log/historical_data_download_wget_scripts_bash_ua_MIROC6.out 2> error_log/historical_data_download_wget_scripts_bash_ua_MIROC6.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical IPSL-CM6A-LR > output_log/historical_data_download_wget_scripts_bash_ua_IPSL-CM6A-LR.out 2> error_log/historical_data_download_wget_scripts_bash_ua_IPSL-CM6A-LR.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical CESM1-1-CAM5-CMIP5 > output_log/historical_data_download_wget_scripts_bash_ua_CESM1-1-CAM5-CMIP5.out 2> error_log/historical_data_download_wget_scripts_bash_ua_CESM1-1-CAM5-CMIP5.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash ua historical NorCPM1 > output_log/historical_data_download_wget_scripts_bash_ua_NorCPM1.out 2> error_log/historical_data_download_wget_scripts_bash_ua_NorCPM1.err &
+
+# now for va variable
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical BCC-CSM2-MR > output_log/historical_data_download_wget_scripts_bash_va_BCC-CSM2-MR.out 2> error_log/historical_data_download_wget_scripts_bash_va_BCC-CSM2-MR.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical MPI-ESM1-2-HR > output_log/historical_data_download_wget_scripts_bash_va_MPI-ESM1-2-HR.out 2> error_log/historical_data_download_wget_scripts_bash_va_MPI-ESM1-2-HR.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical CanESM5 > output_log/historical_data_download_wget_scripts_bash_va_CanESM5.out 2> error_log/historical_data_download_wget_scripts_bash_va_CanESM5.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical CMCC-CM2-SR5 > output_log/historical_data_download_wget_scripts_bash_va_CMCC-CM2-SR5.out 2> error_log/historical_data_download_wget_scripts_bash_va_CMCC-CM2-SR5.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical HadGEM3-GC31-MM > output_log/historical_data_download_wget_scripts_bash_va_HadGEM3-GC31-MM.out 2> error_log/historical_data_download_wget_scripts_bash_va_HadGEM3-GC31-MM.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical EC-Earth3 > output_log/historical_data_download_wget_scripts_bash_va_EC-Earth3.out 2> error_log/historical_data_download_wget_scripts_bash_va_EC-Earth3.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical FGOALS-f3-L > output_log/historical_data_download_wget_scripts_bash_va_FGOALS-f3-L.out 2> error_log/historical_data_download_wget_scripts_bash_va_FGOALS-f3-L.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical MIROC6 > output_log/historical_data_download_wget_scripts_bash_va_MIROC6.out 2> error_log/historical_data_download_wget_scripts_bash_va_MIROC6.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical IPSL-CM6A-LR > output_log/historical_data_download_wget_scripts_bash_va_IPSL-CM6A-LR.out 2> error_log/historical_data_download_wget_scripts_bash_va_IPSL-CM6A-LR.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical CESM1-1-CAM5-CMIP5 > output_log/historical_data_download_wget_scripts_bash_va_CESM1-1-CAM5-CMIP5.out 2> error_log/historical_data_download_wget_scripts_bash_va_CESM1-1-CAM5-CMIP5.err &
+
+nohup bash historical/process_scripts/historical_data_download_wget_scripts.bash va historical NorCPM1 > output_log/historical_data_download_wget_scripts_bash_va_NorCPM1.out 2> error_log/historical_data_download_wget_scripts_bash_va_NorCPM1.err &
