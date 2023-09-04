@@ -26,7 +26,7 @@ fi
 
 # Check that the variable provided is valid
 # must be either: psl, sfcWind, tas or rsds
-if [ "$1" != "psl" ] && [ "$1" != "sfcWind" ] && [ "$1" != "tas" ] && [ "$1" != "rsds" ] && [ "$1" != "tos" ]; then
+if [ "$1" != "psl" ] && [ "$1" != "sfcWind" ] && [ "$1" != "tas" ] && [ "$1" != "rsds" ] && [ "$1" != "tos" ] && [ "$1" != "ua" ] && [ "$1" != "va" ]; then
     echo "Invalid variable provided"
     echo "Usage: bash historical_data_download_wget_scripts.bash <variable> <experiment_id> <model>"
     echo "Example: bash historical_data_download_wget_scripts.bash tas historical BCC-CSM2-MR"
