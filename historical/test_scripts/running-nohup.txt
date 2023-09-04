@@ -1,0 +1,51 @@
+# Examples for running the script
+# tas_models = ["BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "CESM1-1-CAM5-CMIP5", "NorCPM1"]
+
+
+# all of the ua ones first
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua BCC-CSM2-MR esgf.ceda.ac.uk dcppA-hindcast > output_log/output_BCC-CSM2-MR_esgf.ceda.ac.uk_dcppA-hindcast_ua.txt 2> error_log/error_BCC-CSM2-MR_esgf.ceda.ac.uk_dcppA-hindcast_ua.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua MPI-ESM1-2-HR esgf.ceda.ac.uk dcppA-hindcast > output_log/output_MPI-ESM1-2-HR_esgf.ceda.ac.uk_dcppA-hindcast_ua.txt 2> error_log/error_MPI-ESM1-2-HR_esgf.ceda.ac.uk_dcppA-hindcast_ua.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua CanESM5 crd-esgf-drc.ec.gc.ca dcppA-hindcast > output_log/output_CanESM5_crd-esgf-drc.ec.gc.ca_dcppA-hindcast_ua.txt 2> error_log/error_CanESM5_crd-esgf-drc.ec.gc.ca_dcppA-hindcast_ua.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua CMCC-CM2-SR5 vesg.ipsl.upmc.fr dcppA-hindcast > output_log/output_CMCC-CM2-SR5_vesg.ipsl.upmc.fr_dcppA-hindcast_ua.txt 2> error_log/error_CMCC-CM2-SR5_vesg.ipsl.upmc.fr_dcppA-hindcast_ua.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua HadGEM3-GC31-MM esgf.ceda.ac.uk dcppA-hindcast > output_log/output_HadGEM3-GC31-MM_esgf.ceda.ac.uk_dcppA-hindcast_ua.txt 2> error_log/error_HadGEM3-GC31-MM_esgf.ceda.ac.uk_dcppA-hindcast_ua.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua EC-Earth3 esgf.ceda.ac.uk dcppA-hindcast > output_log/output_EC-Earth3_esgf.ceda.ac.uk_dcppA-hindcast_ua.txt 2> error_log/error_EC-Earth3_esgf.ceda.ac.uk_dcppA-hindcast_ua.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua FGOALS-f3-L esg.lasg.ac.cn dcppA-hindcast > output_log/output_FGOALS-f3-L_esg.lasg.ac.cn_dcppA-hindcast_ua.txt 2> error_log/error_FGOALS-f3-L_esg.lasg.ac.cn_dcppA-hindcast_ua.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua MIROC6 esgf-data02.diasjp.net dcppA-hindcast > output_log/output_MIROC6_esgf-data02.diasjp.net_dcppA-hindcast_ua.txt 2> error_log/error_MIROC6_esgf-data02.diasjp.net_dcppA-hindcast_ua.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua IPSL-CM6A-LR vesg.ipsl.upmc.fr dcppA-hindcast > output_log/output_IPSL-CM6A-LR_vesg.ipsl.upmc.fr_dcppA-hindcast_ua.txt 2> error_log/error_IPSL-CM6A-LR_vesg.ipsl.upmc.fr_dcppA-hindcast_ua.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua CESM1-1-CAM5-CMIP5 esgf-data.ucar.edu dcppA-hindcast > output_log/output_CESM1-1-CAM5-CMIP5_esgf-data.ucar.edu_dcppA-hindcast_ua.txt 2> error_log/error_CESM1-1-CAM5-CMIP5_esgf-data.ucar.edu_dcppA-hindcast_ua.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua NorCPM1 noresg.nird.sigma2.no dcppA-hindcast > output_log/output_NorCPM1_noresg.nird.sigma2.no_dcppA-hindcast_ua.txt 2> error_log/error_NorCPM1_noresg.nird.sigma2.no_dcppA-hindcast_ua.txt &
+
+
+
+# all of the va ones next
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va BCC-CSM2-MR cmip.bcc.cma.cn dcppA-hindcast > output_log/output_BCC-CSM2-MR_cmip.bcc.cma.cn_dcppA-hindcast_va.txt 2> error_log/error_BCC-CSM2-MR_cmip.bcc.cma.cn_dcppA-hindcast_va.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va MPI-ESM1-2-HR esgf3.dkrz.de dcppA-hindcast > output_log/output_MPI-ESM1-2-HR_esgf3.dkrz.de_va_dcppA-hindcast_va.txt 2> error_log/error_MPI-ESM1-2-HR_esgf3.dkrz.de_va_dcppA-hindcast_va.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va CanESM5 crd-esgf-drc.ec.gc.ca dcppA-hindcast > output_log/output_CanESM5_crd-esgf-drc.ec.gc.ca_dcppA-hindcast_va.txt 2> error_log/error_CanESM5_crd-esgf-drc.ec.gc.ca_dcppA-hindcast_va.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va CMCC-CM2-SR5 esgf-node2.cmcc.it dcppA-hindcast > output_log/output_CMCC-CM2-SR5_esgf-node2.cmcc.it_dcppA-hindcast_va.txt 2> error_log/error_CMCC-CM2-SR5_esgf-node2.cmcc.it_dcppA-hindcast_va.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va HadGEM3-GC31-MM esgf.ceda.ac.uk dcppA-hindcast > output_log/output_HadGEM3-GC31-MM_esgf.ceda.ac.uk_dcppA-hindcast_va.txt 2> error_log/error_HadGEM3-GC31-MM_esgf.ceda.ac.uk_dcppA-hindcast_va.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va EC-Earth3 esgf.bsc.es dcppA-hindcast > output_log/output_EC-Earth3_esgf.bsc.es_dcppA-hindcast_va.txt 2> error_log/error_EC-Earth3_esgf.bsc.es_dcppA-hindcast_va.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va FGOALS-f3-L esg.lasg.ac.cn dcppA-hindcast > output_log/output_FGOALS-f3-L_esg.lasg.ac.cn_dcppA-hindcast_va.txt 2> error_log/error_FGOALS-f3-L_esg.lasg.ac.cn_dcppA-hindcast_va.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va MIROC6 esgf-data02.diasjp.net dcppA-hindcast > output_log/output_MIROC6_esgf-data02.diasjp.net_dcppA-hindcast_va.txt 2> error_log/error_MIROC6_esgf-data02.diasjp.net_dcppA-hindcast_va.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va IPSL-CM6A-LR vesg.ipsl.upmc.fr dcppA-hindcast > output_log/output_IPSL-CM6A-LR_vesg.ipsl.upmc.fr_dcppA-hindcast_va.txt 2> error_log/error_IPSL-CM6A-LR_vesg.ipsl.upmc.fr_dcppA-hindcast_va.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va CESM1-1-CAM5-CMIP5 esgf-data.ucar.edu dcppA-hindcast > output_log/output_CESM1-1-CAM5-CMIP5_esgf-data.ucar.edu_dcppA-hindcast_va.txt 2> error_log/error_CESM1-1-CAM5-CMIP5_esgf-data.ucar.edu_dcppA-hindcast_va.txt &
+
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash va NorCPM1 noresg.nird.sigma2.no dcppA-hindcast > output_log/output_NorCPM1_noresg.nird.sigma2.no_dcppA-hindcast_va.txt 2> error_log/error_NorCPM1_noresg.nird.sigma2.no_dcppA-hindcast_va.txt &
