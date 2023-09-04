@@ -9,7 +9,7 @@ nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua MPI-ES
 
 nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua CanESM5 crd-esgf-drc.ec.gc.ca dcppA-hindcast > output_log/output_CanESM5_crd-esgf-drc.ec.gc.ca_dcppA-hindcast_ua.txt 2> error_log/error_CanESM5_crd-esgf-drc.ec.gc.ca_dcppA-hindcast_ua.txt &
 
-nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua CMCC-CM2-SR5 vesg.ipsl.upmc.fr dcppA-hindcast > output_log/output_CMCC-CM2-SR5_vesg.ipsl.upmc.fr_dcppA-hindcast_ua.txt 2> error_log/error_CMCC-CM2-SR5_vesg.ipsl.upmc.fr_dcppA-hindcast_ua.txt &
+nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua CMCC-CM2-SR5 esgf-node2.cmcc.it dcppA-hindcast > output_log/output_CMCC-CM2-SR5_esgf-node2.cmcc.it_dcppA-hindcast_ua.txt 2> error_log/error_CMCC-CM2-SR5_esgf-node2.cmcc.it_dcppA-hindcast_ua.txt &
 
 nohup bash historical/process_scripts/historical_run_wget_scripts.bash ua HadGEM3-GC31-MM esgf.ceda.ac.uk dcppA-hindcast > output_log/output_HadGEM3-GC31-MM_esgf.ceda.ac.uk_dcppA-hindcast_ua.txt 2> error_log/error_HadGEM3-GC31-MM_esgf.ceda.ac.uk_dcppA-hindcast_ua.txt &
 
