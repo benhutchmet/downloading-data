@@ -4,7 +4,10 @@ import os
 import pandas as pd
 import requests
 from tqdm import tqdm
-from typing import List, Dict
+from typing import List, Dict, Union
+from pyesgf.search import ResultSet
+
+# Set the environment variables
 os.environ["ESGF_PYCLIENT_NO_FACETS_STAR_WARNING"] = "on"
 
 
@@ -15,7 +18,8 @@ def query_data_esgf(connection: SearchConnection,
                     table_id: str = 'Amon',
                     project: str = 'CMIP6',
                     member_id: str = None,
-                    latest: bool = True)-> List[Dict]:
+                    data_node: str = None,
+                    latest: bool = True) -> ResultSet:
     """
     Query the ESGF database for a given dataset.
 
@@ -31,40 +35,39 @@ def query_data_esgf(connection: SearchConnection,
         Variable name. E.g. 'tas'.
     table_id : str, optional
         Table name. E.g. 'Amon'. The default is 'Amon'.
-    project : str, optiSonal
+    project : str, optional
         Project name. E.g. 'CMIP6'. The default is 'CMIP6'.
     member_id : str, optional
         Member name. E.g. 'r1i1p1f1'. The default is None.
+    data_node : str, optional
+        Data node name. E.g. 'crd-esgf-drc.ec.gc.ca'. The default is None.
     latest : bool, optional
         Whether to download the latest version of the dataset. The default is True.
         
     Returns
     -------
-    results : list
+    results : ResultSet
         List of dictionaries containing the dataset information.
     """
 
-    if member_id is None:
-        # Query the database
-        query = connection.new_context(
-            latest=latest,
-            project=project,
-            source_id=source_id,
-            experiment_id=experiment_id,
-            variable_id=variable_id,
-            table_id=table_id
-        )
-    else:
-        # Query the database
-        query = connection.new_context(
-            latest=latest,
-            project=project,
-            source_id=source_id,
-            experiment_id=experiment_id,
-            variable_id=variable_id,
-            table_id=table_id,
-            member_id=member_id
-        )
+    # Define common parameters
+    params = {
+        "latest": latest,
+        "project": project,
+        "source_id": source_id,
+        "experiment_id": experiment_id,
+        "variable_id": variable_id,
+        "table_id": table_id
+    }
+
+    # Add optional parameters if they are not None
+    if member_id is not None:
+        params["member_id"] = member_id
+    if data_node is not None:
+        params["data_node"] = data_node
+
+    # Query the database
+    query = connection.new_context(**params)
 
     # Get the results
     results = query.search()
