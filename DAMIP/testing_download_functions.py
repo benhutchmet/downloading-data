@@ -94,7 +94,7 @@ def extract_file_context(results: ResultSet) -> list[dict]:
     """
 
     # Initialise an empty list to store the results
-    hit_list = []
+    files_list = []
 
     print("Extracting file context for " + str(len(results)) + " datasets...")
     # Loop over the results to extract the file context
@@ -103,21 +103,11 @@ def extract_file_context(results: ResultSet) -> list[dict]:
             # Extract the file context
             hit = results[i].file_context().search()
 
-            # Append the results to the list
-            hit_list.append(hit)
+            files = map(lambda f: {'filename': f.filename, 'url': f.download_url}, hit)
+
+            files_list.append(list(files))            
         except:
             print(f"Error: {results[i]}")
             continue
     
-    # Use map to extract the file name and download URL from the list of dictionaries
-    files_list = list(
-        map(
-            lambda f: {
-                "file_name": f.filename,
-                "download_url": f.download_url
-            }, 
-            hit_list
-        )
-    )
-
     return files_list
