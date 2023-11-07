@@ -73,3 +73,51 @@ def query_data_esgf(connection: SearchConnection,
     results = query.search()
 
     return results
+
+# Write a function which will extract the file context from the results
+# and return a list of dictionaries containing the file name and download 
+# URL
+def extract_file_context(results: ResultSet) -> list[dict]:
+    """
+    Extract the file context from the results.
+    Save the file name and download URL in a list of dictionaries.
+    
+    Parameters
+    ----------
+    results : ResultSet
+        List of dictionaries containing the dataset information.
+        
+    Returns
+    -------
+    files_list : list[dict]
+        List of dictionaries containing the file name and download URL.
+    """
+
+    # Initialise an empty list to store the results
+    hit_list = []
+
+    print("Extracting file context for " + str(len(results)) + " datasets...")
+    # Loop over the results to extract the file context
+    for i in range(len(results)):
+        try:
+            # Extract the file context
+            hit = results[i].file_context().search()
+
+            # Append the results to the list
+            hit_list.append(hit)
+        except:
+            print(f"Error: {results[i]}")
+            continue
+    
+    # Use map to extract the file name and download URL from the list of dictionaries
+    files_list = list(
+        map(
+            lambda f: {
+                "file_name": f.filename,
+                "download_url": f.download_url
+            }, 
+            hit_list
+        )
+    )
+
+    return files_list
