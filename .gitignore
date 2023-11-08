@@ -2,5 +2,7 @@ log*
 *.log
 output_log/*
 error_log/*
-DAMIP/__pycache__/*
+DAMIP/__pycache__/*pyc
+DAMIP/*.nc
 
+*.pyc
