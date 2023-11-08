@@ -105,7 +105,7 @@ def extract_file_context(results: ResultSet) -> list[dict]:
 
             files = map(lambda f: {'filename': f.filename, 'url': f.download_url}, hit)
 
-            files_list.append(list(files))            
+            files_list.extend(files)           
         except:
             print(f"Error: {results[i]}")
             continue
