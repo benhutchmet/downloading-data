@@ -1,0 +1,16 @@
+,source_id,data_node,num_results
+0,IPSL-CM6A-LR,aims3.llnl.gov,10
+1,CNRM-CM6-1,aims3.llnl.gov,10
+2,BCC-CSM2-MR,aims3.llnl.gov,3
+3,MRI-ESM2-0,esgf-data03.diasjp.net,5
+4,HadGEM3-GC31-LL,esgf-data1.llnl.gov,51
+5,GISS-E2-1-G,dpesgf03.nccs.nasa.gov,15
+6,GFDL-ESM4,esgf-data1.llnl.gov,1
+7,ACCESS-ESM1-5,esgf-data1.llnl.gov,3
+8,NorESM2-LM,esgf-data04.diasjp.net,1
+9,ACCESS-CM2,esgf-data1.llnl.gov,3
+10,MIROC6,esgf-data02.diasjp.net,10
+11,CanESM5,crd-esgf-drc.ec.gc.ca,30
+12,E3SM-2-0,esgf-data2.llnl.gov,5
+13,FGOALS-g3,esg.lasg.ac.cn,3
+14,CESM2,esgf-data.ucar.edu,2

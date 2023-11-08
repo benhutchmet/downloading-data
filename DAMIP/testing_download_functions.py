@@ -19,6 +19,7 @@ def query_data_esgf(connection: SearchConnection,
                     variable_id: str,
                     table_id: str = 'Amon',
                     project: str = 'CMIP6',
+                    activity_id: str = None,
                     member_id: str = None,
                     data_node: str = None,
                     latest: bool = True) -> ResultSet:
@@ -39,6 +40,8 @@ def query_data_esgf(connection: SearchConnection,
         Table name. E.g. 'Amon'. The default is 'Amon'.
     project : str, optional
         Project name. E.g. 'CMIP6'. The default is 'CMIP6'.
+    activity_id : str, optional
+        Activity name. E.g. 'CMIP'. The default is None.
     member_id : str, optional
         Member name. E.g. 'r1i1p1f1'. The default is None.
     data_node : str, optional
@@ -67,6 +70,8 @@ def query_data_esgf(connection: SearchConnection,
         params["member_id"] = member_id
     if data_node is not None:
         params["data_node"] = data_node
+    if activity_id is not None:
+        params["activity_id"] = activity_id
 
     # Query the database
     query = connection.new_context(**params)
