@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import requests
 from tqdm import tqdm
-from typing import List, Dict, Union
+from typing import List, Dict, Union, list
 from pyesgf.search import ResultSet
 
 # Set the environment variables
@@ -111,3 +111,50 @@ def extract_file_context(results: ResultSet) -> list[dict]:
             continue
     
     return files_list
+
+# Define a function which will download single files
+def download_file(url: str, filename: str):
+    """
+    Downloads a single NetCDF file from ESGF for a given URL
+    and filename.
+    
+    Parameters
+    ----------
+    url : str
+        URL to download the file from.
+    filename : str
+        Filename to save the file as.
+        
+    Returns
+    -------
+    None
+    """
+
+    # Log the filename and download URL
+    print("Downloading " + filename + " from " + url)
+
+    # Set up the request
+    r = requests.get(url, stream=True)
+
+    # Set up the total size
+    total_size = int(r.headers.get('content-length', 0))
+    
+    # Set up the block size
+    block_size = 1024
+
+    # Download the file
+    with open(filename, 'wb') as f:
+        for data in tqdm(r.iter_content(block_size),
+                            total=total_size//block_size,
+                            unit='KiB',
+                            unit_scale=True):
+                f.write(data)
+
+        # If the total size is not zero
+        # and the file size is not equal to the total size
+        if total_size != 0 and total_size != os.path.getsize(filename):
+            print("Downloaded size does not match expected size!\n",
+                "FYI, the status code was ", r.status_code)
+            
+
+            
