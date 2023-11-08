@@ -1,6 +1,7 @@
 # Import the relevant libraries
 from pyesgf.search import SearchConnection
 import os
+import glob
 import pandas as pd
 import requests
 from tqdm import tqdm
@@ -212,3 +213,77 @@ def download_file(url: str,
                 "FYI, the status code was ", r.status_code)
             
 
+# Write a function which given a dataframe containing the file name and download URL
+# Will check whether the file exists on JASMIN
+def check_file_exists_jasmin(df: pd.DataFrame,
+                             directory: str) -> pd.DataFrame:
+    """
+    Given a dataframe containing the file name and download URL,
+    check whether the file exists on JASMIN.
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Dataframe containing the file name and download URL.
+    directory : str
+        Directory to check for the file.
+        
+    Returns
+    -------
+    df : pd.DataFrame
+        Dataframe containing the file name and download URL.
+    """
+
+    # Create a new column in the dataframe to store whether the file exists
+    df['file_exists'] = False
+
+    # Loop over the dataframe
+    for i in range(len(df)):
+        # Get the filename
+        filename = df['filename'][i]
+
+        # Split the filename by _
+        filename_split = filename.split('_')
+
+        # Extract the variable name
+        variable_name = filename_split[0]
+
+        # Extract the time window
+        time_window = filename_split[1]
+
+        # Extract the model name
+        model_name = filename_split[2]
+
+        # Extract the experiment name
+        experiment_name = filename_split[3]
+
+        # Extract the ensemble member name
+        ensemble_member_name = filename_split[4]
+
+        # Extract the grid name
+        grid_name = filename_split[5]
+
+        # Form the pattern
+        pattern = os.path.join(directory, "*", model_name, experiment_name,
+                                 ensemble_member_name, time_window,
+                                 grid_name, "files", "d*", filename)
+        
+        # Print the pattern
+        print(pattern)
+
+        # Get a list of all paths that match the pattern
+        filepaths = glob.glob(pattern)
+
+        # If filepath is greater than 0, the file exists
+        if len(filepaths) > 0:
+            df['file_exists'][i] = True
+        elif len(filepaths) == 0:
+            df['file_exists'][i] = False
+        elif len(filepaths) > 1:
+            print("More than one file found for " + filename)
+            AssertionError("More than one file found for " + filename)
+        else:
+            print("Something went wrong with " + filename)
+            AssertionError("Something went wrong with " + filename)
+
+    return df
