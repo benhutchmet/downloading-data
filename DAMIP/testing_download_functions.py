@@ -6,6 +6,7 @@ import requests
 from tqdm import tqdm
 from typing import List, Dict, Union
 from pyesgf.search import ResultSet
+from concurrent.futures import ThreadPoolExecutor
 
 # Set the environment variables
 os.environ["ESGF_PYCLIENT_NO_FACETS_STAR_WARNING"] = "on"
@@ -77,6 +78,7 @@ def query_data_esgf(connection: SearchConnection,
 # Write a function which will extract the file context from the results
 # and return a list of dictionaries containing the file name and download 
 # URL
+# Python
 def extract_file_context(results: ResultSet) -> list[dict]:
     """
     Extract the file context from the results.
@@ -97,19 +99,27 @@ def extract_file_context(results: ResultSet) -> list[dict]:
     files_list = []
 
     print("Extracting file context for " + str(len(results)) + " datasets...")
-    # Loop over the results to extract the file context
-    for i in range(len(results)):
+
+    # Define a function to extract the file context for a single result
+    def extract_single_file_context(result):
         try:
             # Extract the file context
-            hit = results[i].file_context().search()
+            hit = result.file_context().search()
 
-            files = map(lambda f: {'filename': f.filename, 'url': f.download_url}, hit)
+            files = list(map(lambda f: {'filename': f.filename, 'url': f.download_url}, hit))
 
-            files_list.extend(files)           
+            return files
         except:
-            print(f"Error: {results[i]}")
-            continue
-    
+            print(f"Error: {result}")
+            return []
+
+    # Use a thread pool to extract the file context for all results
+    with ThreadPoolExecutor() as executor:
+        files_list = list(executor.map(extract_single_file_context, results))
+
+    # Flatten the list of lists into a single list
+    files_list = [file for sublist in files_list for file in sublist]
+
     return files_list
 
 # Define a function which will download single files
@@ -132,8 +142,9 @@ def download_file(url: str,
     None
     """
 
-    # Assert that the directory exists
-    assert os.path.isdir(directory), "Directory does not exist!"
+    # If the directory does not exist, create it
+    if not os.path.isdir(directory):
+        os.makedirs(directory)
 
     # Log the filename and download URL
     print("Downloading " + filename + " from " + url)
