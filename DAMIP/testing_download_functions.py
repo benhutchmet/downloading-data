@@ -254,6 +254,14 @@ def check_file_exists_jasmin(df: pd.DataFrame,
         # Extract the model name
         model_name = filename_split[2]
 
+        # Split the url by /
+        # and extract the last 7th element
+        # which is the directory name
+        url_split = df['url'][i].split('/')
+        model_group = url_split[8]
+
+        print(model_group)
+
         # Extract the experiment name
         experiment_name = filename_split[3]
 
@@ -264,12 +272,9 @@ def check_file_exists_jasmin(df: pd.DataFrame,
         grid_name = filename_split[5]
 
         # Form the pattern
-        pattern = os.path.join(directory, "*", model_name, experiment_name,
-                                 ensemble_member_name, time_window,
-                                 grid_name, "files", "d*", filename)
-        
-        # Print the pattern
-        print(pattern)
+        pattern = os.path.join(directory, model_group, model_name, experiment_name,
+                                ensemble_member_name, time_window, variable_name,
+                                grid_name, "files", "d*", filename)
 
         # Get a list of all paths that match the pattern
         filepaths = glob.glob(pattern)
