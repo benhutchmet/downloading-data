@@ -78,8 +78,43 @@ def query_data_esgf(connection: SearchConnection,
 # Write a function which will extract the file context from the results
 # and return a list of dictionaries containing the file name and download 
 # URL
-# Python
 def extract_file_context(results: ResultSet) -> list[dict]:
+    """
+    Extract the file context from the results.
+    Save the file name and download URL in a list of dictionaries.
+    
+    Parameters
+    ----------
+    results : ResultSet
+        List of dictionaries containing the dataset information.
+        
+    Returns
+    -------
+    files_list : list[dict]
+        List of dictionaries containing the file name and download URL.
+    """
+
+    # Initialise an empty list to store the results
+    files_list = []
+
+    print("Extracting file context for " + str(len(results)) + " datasets...")
+    # Loop over the results to extract the file context
+    for i in range(len(results)):
+        try:
+            # Extract the file context
+            hit = results[i].file_context().search()
+
+            files = map(lambda f: {'filename': f.filename, 'url': f.download_url}, hit)
+
+            files_list.extend(files)           
+        except:
+            print(f"Error: {results[i]}")
+            continue
+    
+    return files_list
+
+# Multi thread version of the above function
+def extract_file_context_multithread(results: ResultSet) -> list[dict]:
     """
     Extract the file context from the results.
     Save the file name and download URL in a list of dictionaries.
@@ -172,7 +207,7 @@ def download_file(url: str,
 
         # If the total size is not zero
         # and the file size is not equal to the total size
-        if total_size != 0 and total_size != os.path.getsize(filename):
+        if total_size != 0:
             print("Downloaded size does not match expected size!\n",
                 "FYI, the status code was ", r.status_code)
             
