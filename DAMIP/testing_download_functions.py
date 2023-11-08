@@ -79,7 +79,7 @@ def query_data_esgf(connection: SearchConnection,
 # Write a function which will extract the file context from the results
 # and return a list of dictionaries containing the file name and download 
 # URL
-def extract_file_context(results: ResultSet) -> list[dict]:
+def extract_file_context(results: ResultSet) -> 'list[dict]':
     """
     Extract the file context from the results.
     Save the file name and download URL in a list of dictionaries.
@@ -98,16 +98,21 @@ def extract_file_context(results: ResultSet) -> list[dict]:
     # Initialise an empty list to store the results
     files_list = []
 
-    print("Extracting file context for " + str(len(results)) + " datasets...")
+    total_results = len(results)
+    print(f"Extracting file context for {total_results} datasets...")
+
     # Loop over the results to extract the file context
-    for i in range(len(results)):
+    for i in range(total_results):
         try:
             # Extract the file context
             hit = results[i].file_context().search()
 
             files = map(lambda f: {'filename': f.filename, 'url': f.download_url}, hit)
 
-            files_list.extend(files)           
+            files_list.extend(files)
+
+            # Log the progress
+            print(f"Processed {i+1} out of {total_results} results.")           
         except:
             print(f"Error: {results[i]}")
             continue
@@ -115,7 +120,7 @@ def extract_file_context(results: ResultSet) -> list[dict]:
     return files_list
 
 # Multi thread version of the above function
-def extract_file_context_multithread(results: ResultSet) -> list[dict]:
+def extract_file_context_multithread(results: ResultSet) -> 'list[dict]':
     """
     Extract the file context from the results.
     Save the file name and download URL in a list of dictionaries.
@@ -258,7 +263,13 @@ def check_file_exists_jasmin(df: pd.DataFrame,
         # and extract the last 7th element
         # which is the directory name
         url_split = df['url'][i].split('/')
-        model_group = url_split[8]
+
+        # Identify the idex for the model name
+        model_index = url_split.index(model_name)
+
+        # Extract the element before the model name
+        # which is the model group
+        model_group = url_split[model_index - 1]
 
         print(model_group)
 
@@ -281,9 +292,11 @@ def check_file_exists_jasmin(df: pd.DataFrame,
 
         # If filepath is greater than 0, the file exists
         if len(filepaths) > 0:
-            df['file_exists'][i] = True
+            print("File exists for " + filename)
+            df.loc[i, 'file_exists'] = True
         elif len(filepaths) == 0:
-            df['file_exists'][i] = False
+            print("File does not exist for " + filename)
+            df.loc[i, 'file_exists'] = False
         elif len(filepaths) > 1:
             print("More than one file found for " + filename)
             AssertionError("More than one file found for " + filename)
