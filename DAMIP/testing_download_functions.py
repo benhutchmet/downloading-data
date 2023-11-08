@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import requests
 from tqdm import tqdm
-from typing import List, Dict, Union, list
+from typing import List, Dict, Union
 from pyesgf.search import ResultSet
 
 # Set the environment variables
@@ -113,7 +113,9 @@ def extract_file_context(results: ResultSet) -> list[dict]:
     return files_list
 
 # Define a function which will download single files
-def download_file(url: str, filename: str):
+def download_file(url: str, 
+                  filename: str,
+                  directory: str):
     """
     Downloads a single NetCDF file from ESGF for a given URL
     and filename.
@@ -130,8 +132,12 @@ def download_file(url: str, filename: str):
     None
     """
 
+    # Assert that the directory exists
+    assert os.path.isdir(directory), "Directory does not exist!"
+
     # Log the filename and download URL
     print("Downloading " + filename + " from " + url)
+    print("Saving to " + directory + filename)
 
     # Set up the request
     r = requests.get(url, stream=True)
@@ -142,8 +148,11 @@ def download_file(url: str, filename: str):
     # Set up the block size
     block_size = 1024
 
+    # Set up the filepath
+    filepath = os.path.join(directory, filename)
+
     # Download the file
-    with open(filename, 'wb') as f:
+    with open(filepath, 'wb') as f:
         for data in tqdm(r.iter_content(block_size),
                             total=total_size//block_size,
                             unit='KiB',
@@ -157,4 +166,3 @@ def download_file(url: str, filename: str):
                 "FYI, the status code was ", r.status_code)
             
 
-            
