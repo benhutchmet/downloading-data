@@ -226,7 +226,7 @@ def download_file(url: str,
 # Write a function which given a dataframe containing the file name and download URL
 # Will check whether the file exists on JASMIN
 def check_file_exists_jasmin(df: pd.DataFrame,
-                             directory: str) -> pd.DataFrame:
+                            directory: str) -> pd.DataFrame:
     """
     Given a dataframe containing the file name and download URL,
     check whether the file exists on JASMIN.
@@ -246,6 +246,9 @@ def check_file_exists_jasmin(df: pd.DataFrame,
 
     # Create a new column in the dataframe to store whether the file exists
     df['file_exists'] = False
+
+    # Create a new column in the dataframe to store the file path
+    df['filepath'] = None
 
     # Loop over the dataframe
     for i in range(len(df)):
@@ -299,6 +302,7 @@ def check_file_exists_jasmin(df: pd.DataFrame,
         if len(filepaths) > 0:
             print("File exists for " + filename)
             df.loc[i, 'file_exists'] = True
+            df.loc[i, 'filepath'] = filepaths[0]
         elif len(filepaths) == 0:
             print("File does not exist for " + filename)
             df.loc[i, 'file_exists'] = False
