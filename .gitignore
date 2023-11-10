@@ -6,3 +6,4 @@ DAMIP/__pycache__/*pyc
 DAMIP/*.nc
 
 *.pyc
+*.csv
