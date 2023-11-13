@@ -495,3 +495,32 @@ def create_results_list(params: dict, max_results_list: list,
         results_list.append(result)
 
     return results_list
+
+# Define a function for extracting the file context for each result
+def extract_file_context_list(results_list: list) -> list:
+    """
+    Extract the file context for each result.
+    
+    Parameters
+    ----------
+    results_list : list
+        A list of dictionaries containing the matching results for each model and node.
+        
+    Returns
+    -------
+    files_list : list
+        A list of dictionaries containing the file name and download URL.
+    """
+
+    # Initialize an empty list to store the results
+    files_list = []
+
+    # Loop through the results_list and extract the file context for each result
+    for i in range(len(results_list)):
+        print("Extracting file context for result {} out of {}.".format(i+1, len(results_list)))
+        # Extract the file context
+        files = extract_file_context(results_list[i])
+        # Append the files to the files_list
+        files_list.append(files)
+
+    return files_list
