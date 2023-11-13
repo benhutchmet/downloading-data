@@ -278,7 +278,8 @@ def check_file_exists_jasmin(df: pd.DataFrame,
     df : pd.DataFrame
         Dataframe containing the file name and download URL.
     directory : str
-        Directory to check for the file.
+        Directory to check for the files.
+        E.g. '/badc/cmip6/data/CMIP6/CMIP' for CMIP experiments.
         
     Returns
     -------
@@ -561,3 +562,78 @@ def extract_file_context_df(files_list: list) -> pd.DataFrame:
         df = pd.concat([df, files_df], ignore_index=True)
 
     return df
+
+# Function to download files that don't exist in the specified
+# directory
+def download_files(download_dir: str, 
+                   df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Download files that don't exist in the specified directory.
+
+    Parameters:
+    download_dir (str): The directory to download the files to.
+    df (pd.DataFrame): The DataFrame containing the file information.
+
+    Returns:
+    pd.DataFrame: The updated DataFrame with the new filepaths.
+    """
+    # Constrain the dataframe to only the files which don't already exist on JASMIN
+    files_df = df[df['file_exists'] == False]
+
+    # Reset the index
+    files_df.reset_index(drop=True, inplace=True)
+
+    # Loop through the files_df and download the files
+    for i in tqdm(range(len(files_df))):
+        # Get the file_url
+        file_url = files_df.loc[i, 'url']
+
+        # Get the filename
+        filename = files_df.loc[i, 'filename']
+
+        # Split the filename and extract the variable name
+        variable = filename.split('_')[0]
+
+        # Split the filename to get the experiment name
+        experiment = filename.split('_')[3]
+
+        # Set up the model
+        model = filename.split('_')[2]
+
+        # Set up the download directory
+        download_dir_loop = os.path.join(download_dir, experiment, variable, model)
+
+        # If the download directory doesn't exist, make it
+        if not os.path.exists(download_dir_loop):
+            os.makedirs(download_dir_loop)
+
+        # Set up the download path
+        download_path = os.path.join(download_dir_loop, filename)
+
+        # In the filepath column of the dataframe
+        # replace the current file path with the download path
+        files_df.loc[i, 'filepath'] = download_path
+
+        # Set up the request
+        r = requests.get(file_url, stream=True)
+
+        # Set up the total size
+        total_size = int(r.headers.get('content-length', 0))
+
+        # Set up the block size
+        block_size = 1024
+
+        # Download the file
+        with open(download_path, 'wb') as f:
+            for data in tqdm(r.iter_content(block_size), 
+                            total = total_size//block_size, 
+                            unit = 'KiB', 
+                            unit_scale = True):
+                f.write(data)
+
+            # If the total size is no 0
+            if total_size != 0:
+                print("File is not empty")
+                print("Download complete - file saved to {}".format(download_path))
+
+    return files_df
