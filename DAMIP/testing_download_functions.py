@@ -357,113 +357,7 @@ def check_file_exists_jasmin(df: pd.DataFrame,
 
     return df
 
-
-
-# # # Constrain the source_id_set to the first 1 model
-# # source_id_set = list(source_id_set)[0:1]
-
-# # # Print the set
-# # print(source_id_set)
-
-# # Initialize an empty dictionary to store the results
-# max_results = {'source_id': None, 'data_node': None, 'num_results': 0}
-
-# # Create a list for the max_results dictionaries
-# max_results_list = []
-
-# # Set up the max results per source dictionary
-# max_results_per_source = {}
-
-# # Loop through the source_id_set and query which nodes have data for each model
-# for source_id in source_id_set:
-#     print("trying to find valid nodes for model: {}".format(source_id))
-#     # Set the source_id constraint
-#     params['source_id'] = source_id
-#     print(params)
-#     # Query the database
-#     model_query = conn.new_context(**params)
-#     # Get the results
-#     model_results = model_query.search()
-#     # Print the number of results
-#     print(len(model_results))
-
-#     # if the len of the model results is not 0
-#     if len(model_results) != 0:
-#         # Print the first result
-#         print(model_results[0].json['id'])
-
-#     # Identify the unique nodes (data_node) which have data for the model
-#     data_node_set = set(result.json['data_node'] for result in model_results)
-
-#     # Print the set
-#     print(data_node_set)
-
-#     # Loop through the data_node_set and query how many files are available for each 
-#     # node
-#     for data_node in data_node_set:
-#         print("trying to find valid files for node: {}".format(data_node))
-        
-#         # Set up the params for the query
-#         params_node = params.copy()
-        
-#         # Set the data_node constraint
-#         params_node['data_node'] = data_node
-#         # Query the database
-#         node_query = conn.new_context(**params_node)
-#         # Get the results
-#         node_results = node_query.search()
-#         # Print the number of results
-#         print(len(node_results))
-
-#         # If this source_id is not in max_results_per_source or this data_node has more results, update the dictionary
-#         if source_id not in max_results_per_source or len(node_results) > max_results_per_source[source_id]:
-#             max_results = {'source_id': source_id, 'data_node': data_node, 'num_results': len(node_results)}
-#             max_results_per_source[source_id] = len(node_results)
-
-#             # Append the max_results dictionary to the list
-#             max_results_list.append(max_results)
-#         else:
-#             print("this data_node has less results than the previous one")
-#             continue
-
-# # Print the dictionary
-# print(max_results_list)
-
-# # Clean the max_results_list to remove duplicate source_id entries
-# # Keep the entry with the highest number of results (num_results)
-# # Initialize an empty list to store the unique source_id entries
-# unique_source_id_list = []
-
-# # Loop through the max_results_list and append the unique source_id entries
-# for result in max_results_list:
-#     if result['source_id'] not in unique_source_id_list:
-#         unique_source_id_list.append(result['source_id'])
-
-# # Print the list
-# print(unique_source_id_list)
-
-# # Initialize an empty list to store the unique max_results_list entries
-# unique_max_results_list = []
-
-# # Loop through the unique_source_id_list and only
-# # Append the max_results_list entries which match the source_id and have the highest num_results
-# for source_id in unique_source_id_list:
-#     print("source_id: {}".format(source_id))
-#     # Initialize an empty list to store the num_results
-#     num_results_list = []
-#     # Loop through the max_results_list and append the num_results to the list
-#     for result in max_results_list:
-#         if result['source_id'] == source_id:
-#             num_results_list.append(result['num_results'])
-#     # Get the max num_results
-#     max_num_results = max(num_results_list)
-#     # Loop through the max_results_list and append the entries which match the source_id and max_num_results
-#     for result in max_results_list:
-#         if result['source_id'] == source_id and result['num_results'] == max_num_results:
-#             unique_max_results_list.append(result)
-
-
-
+# Set up a function to find the valid nodes for each model
 def find_valid_nodes(params: dict, models_list: set, conn) -> list:
     """
     Find valid nodes for each model in the models_list.
@@ -535,3 +429,69 @@ def find_valid_nodes(params: dict, models_list: set, conn) -> list:
 
     print(max_results_list)
     return max_results_list
+
+# Set up a function to create a list of the matching results for each model
+# and node
+def create_results_list(params: dict, max_results_list: list,
+                        connection: SearchConnection) -> list:
+    """
+    Create a list of the matching results for each model and node.
+    By querying the ESGF database for each model and node and the
+    given parameters.
+    
+    
+    Parameters
+    ----------
+    params : dict
+        The parameters for the database query.
+    max_results_list : dict
+        The list of dictionaries containing the 'source_id', 'data_node', and 'num_results' for the model with the most results.
+    connection : SearchConnection
+        The database connection.
+        
+    Returns
+    -------
+    results_list : list
+        A list of dictionaries containing the matching results for each model and node.
+    """
+
+    # Assert that the max_results_list is not empty and is a list
+    assert max_results_list != [], "max_results_list is empty!"
+
+    # Assert that the max_results_list is a list
+    assert isinstance(max_results_list, list), "max_results_list is not a list!"
+
+    # Initialize an empty list to store the results
+    results_list = []
+
+    # Convert the max_results_list to a dataframe
+    max_results_df = pd.DataFrame.from_dict(max_results_list)
+
+    # Loop through the max_results_list and query the database for each model and node
+    for i in range(len(max_results_list)):
+        
+        # Get the source_id and data_node
+        source_id = max_results_list.loc[i, 'source_id']
+        data_node = max_results_list.loc[i, 'data_node']
+
+        # Print the source_id and data_node
+        print("Querying for source_id: {} and data_node: {}".format(source_id, data_node))
+
+        # Query the database
+        result = query_data_esgf(connection=connection,
+                                source_id=source_id,
+                                experiment_id=params['experiment_id'],
+                                variable_id=params['variable_id'],
+                                table_id=params['table_id'],
+                                project=params['project'],
+                                activity_id=params['activity_id'],
+                                data_node=data_node,
+                                latest=params['latest'])
+        
+        # Print the number of results
+        print("Found {} results.".format(len(result)))
+
+        # Append the results to the results_list
+        results_list.append(result)
+
+    return results_list
