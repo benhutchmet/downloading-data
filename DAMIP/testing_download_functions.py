@@ -524,3 +524,40 @@ def extract_file_context_list(results_list: list) -> list:
         files_list.append(files)
 
     return files_list
+
+# Define a function for extracting the file context for each result
+# and appending it using pandas.concat to a dataframe
+def extract_file_context_df(files_list: list) -> pd.DataFrame:
+    """
+    Extract the file context for each result.
+    Append the results to a dataframe.
+    
+    Parameters
+    ----------
+    files_list : list
+        A list of dictionaries containing the file context for each of the
+        model node results.
+        
+    Returns
+    -------
+    df : pd.DataFrame
+        A dataframe containing the file name and download URL.
+    """
+
+    # Initialize an empty dataframe to store the results
+    df = pd.DataFrame()
+
+    # Loop through the files_list and extract the file context for each result
+    for i in range(len(files_list)):
+        print("Extracting file context for result {} out of {}.".format(i+1, len(files_list)))
+        
+        # Extract the file context
+        files = files_list[i]
+
+        # Convert the files to a dataframe
+        files_df = pd.DataFrame.from_dict(files)
+
+        # Append the files_df to the df
+        df = pd.concat([df, files_df], ignore_index=True)
+
+    return df
