@@ -524,5 +524,14 @@ def find_valid_nodes(params: dict, models_list: set, conn) -> list:
         # After checking all data_nodes for this source_id, append max_results to max_results_list
         max_results_list.append(max_results)
 
+
+    # Assert that there are no duplicate source_id entries in max_results_list
+    assert len(max_results_list) == len(set(result['source_id'] for result in max_results_list)), \
+    "There are duplicate source_id entries in max_results_list!"
+
+    # Assert that all of the source_id's in models_list are in max_results_list
+    assert all(result['source_id'] in models_list for result in max_results_list), \
+    "Not all of the source_id's in models_list are in max_results_list!"
+
     print(max_results_list)
     return max_results_list
