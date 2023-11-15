@@ -64,6 +64,7 @@ def query_data_esgf(connection: SearchConnection,
                     activity_id: str = None,
                     member_id: str = None,
                     data_node: str = None,
+                    sub_experiment_id: str = None,
                     latest: bool = True) -> ResultSet:
     """
     Query the ESGF database for a given dataset.
@@ -88,6 +89,8 @@ def query_data_esgf(connection: SearchConnection,
         Member name. E.g. 'r1i1p1f1'. The default is None.
     data_node : str, optional
         Data node name. E.g. 'crd-esgf-drc.ec.gc.ca'. The default is None.
+    sub_experiment_id : str, optional
+        Sub experiment name. E.g. 's1960'. The default is None.
     latest : bool, optional
         Whether to download the latest version of the dataset. The default is True.
         
@@ -114,6 +117,8 @@ def query_data_esgf(connection: SearchConnection,
         params["data_node"] = data_node
     if activity_id is not None:
         params["activity_id"] = activity_id
+    if sub_experiment_id is not None:
+        params["sub_experiment_id"] = sub_experiment_id
 
     # Query the database
     query = connection.new_context(**params)
@@ -469,11 +474,11 @@ def create_results_list(params: dict, max_results_list: list,
     max_results_df = pd.DataFrame.from_dict(max_results_list)
 
     # Loop through the max_results_list and query the database for each model and node
-    for i in range(len(max_results_list)):
+    for i in range(len(max_results_df)):
         
         # Get the source_id and data_node
-        source_id = max_results_list.loc[i, 'source_id']
-        data_node = max_results_list.loc[i, 'data_node']
+        source_id = max_results_df.loc[i, 'source_id']
+        data_node = max_results_df.loc[i, 'data_node']
 
         # Print the source_id and data_node
         print("Querying for source_id: {} and data_node: {}".format(source_id, data_node))
@@ -487,6 +492,7 @@ def create_results_list(params: dict, max_results_list: list,
                                 project=params['project'],
                                 activity_id=params['activity_id'],
                                 data_node=data_node,
+                                sub_experiment_id=params['sub_experiment_id'],
                                 latest=params['latest'])
         
         # Print the number of results
