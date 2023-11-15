@@ -338,10 +338,24 @@ def check_file_exists_jasmin(df: pd.DataFrame,
         # Extract the grid name
         grid_name = filename_split[5]
 
-        # Form the pattern
-        pattern = os.path.join(directory, model_group, model_name, experiment_name,
-                                ensemble_member_name, time_window, variable_name,
-                                grid_name, "files", "d*", filename)
+        # split the directory by /
+        # and extract the first element
+        directory_split = directory.split('/')
+        
+        directory_first = directory_split[1]
+
+        print(directory_first)
+
+        # if the first directory of the directory is badc
+        if directory_first == 'badc':
+            # Form the pattern
+            pattern = os.path.join(directory, model_group, model_name, experiment_name,
+                                    ensemble_member_name, time_window, variable_name,
+                                    grid_name, "files", "d*", filename)
+        elif directory_first == 'gws':
+            # Form the pattern
+            pattern = os.path.join(directory, experiment_name, "data",
+                                    variable_name, model_name, filename)
 
         # Get a list of all paths that match the pattern
         filepaths = glob.glob(pattern)
