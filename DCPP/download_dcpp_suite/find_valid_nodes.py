@@ -34,6 +34,7 @@ from pyesgf.search import SearchConnection
 import pandas as pd
 import requests
 import tqdm as tqdm
+from datetime import datetime
 
 # Set the environment to on
 os.environ['ESGF_PYCLIENT_NO_FACETS_STAR_WARNING'] = "on"
@@ -247,3 +248,26 @@ if __name__ == "__main__":
 
     # Now once we have the valid nodes we want to extract these into a .csv
     # format to save them for the other scripts
+    valid_nodes_df = extract_valid_nodes_to_csv(valid_nodes)
+
+    # Print the dataframe
+    print(valid_nodes_df)
+
+    # Set up the directory to save the .csv file
+    save_dir = "/gws/nopw/j04/canari/users/benhutch/dcppA-hindcast/download_data/"
+
+    # If the directory doesn't exist then create it
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+
+    # Set up the current date
+    current_date = datetime.now().strftime("%Y%m%d")
+
+    # Create a filename for the .csv file
+    filename = f"{variable}_{experiment}_valid_nodes_{current_date}.csv"
+
+    # Form the full path
+    full_path = os.path.join(save_dir, filename)
+
+    # Save the dataframe without the index
+    valid_nodes_df.to_csv(full_path, index=False)
