@@ -153,8 +153,11 @@ def extract_file_context(results: ResultSet) -> 'list[dict]':
     total_results = len(results)
     print(f"Extracting file context for {total_results} datasets...")
 
+    # Keep a list of the results which fail
+    failed_results = []
+
     # Loop over the results to extract the file context
-    for i in range(total_results):
+    for i in tqdm(range(total_results)):
         try:
             # Extract the file context
             hit = results[i].file_context().search()
@@ -167,9 +170,13 @@ def extract_file_context(results: ResultSet) -> 'list[dict]':
             print(f"Processed {i+1} out of {total_results} results.")           
         except:
             print(f"Error: {results[i]}")
+
+            # Append the result to the failed results list
+            failed_results.append(results[i])
+            
             continue
     
-    return files_list
+    return files_list, failed_results
 
 # Multi thread version of the above function
 def extract_file_context_multithread(results: ResultSet) -> 'list[dict]':
@@ -363,11 +370,20 @@ def check_file_exists_jasmin(df: pd.DataFrame,
         # If filepath is greater than 0, the file exists
         if len(filepaths) > 0:
             print("File exists for " + filename)
-            df.loc[i, 'file_exists'] = True
-            df.loc[i, 'filepath'] = filepaths[0]
+            
+            if df.loc[i, 'file_exists'] == False:
+                df.loc[i, 'file_exists'] = True
+                df.loc[i, 'filepath'] = filepaths[0]
+            else:
+                print("File already exists for " + filename)
+
         elif len(filepaths) == 0:
             print("File does not exist for " + filename)
-            df.loc[i, 'file_exists'] = False
+
+            # If the file does not already exist
+            # then set file_exists to False
+            if df.loc[i, 'file_exists'] == False:
+                df.loc[i, 'file_exists'] = False
         elif len(filepaths) > 1:
             print("More than one file found for " + filename)
             AssertionError("More than one file found for " + filename)
@@ -476,7 +492,7 @@ def create_results_list(params: dict, max_results_list: list,
     """
 
     # Assert that the max_results_list is not empty and is a list
-    assert max_results_list != [], "max_results_list is empty!"
+    # assert max_results_list != [], "max_results_list is empty!"
 
     # # Assert that the max_results_list is a list
     # assert isinstance(max_results_list, list), "max_results_list is not a list!"
@@ -488,6 +504,13 @@ def create_results_list(params: dict, max_results_list: list,
     if isinstance(max_results_list, dict):
         # Convert the max_results_list to a dataframe
         max_results_df = pd.DataFrame.from_dict(max_results_list)
+    elif isinstance(max_results_list, list):
+        # Convert the max_results_list to a dataframe
+        max_results_df = pd.DataFrame.from_dict(max_results_list)
+    elif isinstance(max_results_list, pd.DataFrame):
+        max_results_df = max_results_list
+    else:
+        raise TypeError("max_results_list is not a dictionary or dataframe!")
 
     # Loop through the max_results_list and query the database for each model and node
     for i in tqdm(range(len(max_results_df))):
