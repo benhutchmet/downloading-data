@@ -478,17 +478,19 @@ def create_results_list(params: dict, max_results_list: list,
     # Assert that the max_results_list is not empty and is a list
     assert max_results_list != [], "max_results_list is empty!"
 
-    # Assert that the max_results_list is a list
-    assert isinstance(max_results_list, list), "max_results_list is not a list!"
+    # # Assert that the max_results_list is a list
+    # assert isinstance(max_results_list, list), "max_results_list is not a list!"
 
     # Initialize an empty list to store the results
     results_list = []
 
-    # Convert the max_results_list to a dataframe
-    max_results_df = pd.DataFrame.from_dict(max_results_list)
+    # If the max_results_list is a dictionary, convert it to a list
+    if isinstance(max_results_list, dict):
+        # Convert the max_results_list to a dataframe
+        max_results_df = pd.DataFrame.from_dict(max_results_list)
 
     # Loop through the max_results_list and query the database for each model and node
-    for i in range(len(max_results_df)):
+    for i in tqdm(range(len(max_results_df))):
         
         # Get the source_id and data_node
         source_id = max_results_df.loc[i, 'source_id']

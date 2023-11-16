@@ -20,3 +20,6 @@ var_models = {
     'vas': models_uas_vas,
     'rsds': models_rsds
 }
+
+# Set up the path for the downloaded data
+download_csv_path = "/gws/nopw/j04/canari/users/benhutch/dcppA-hindcast/download_data/"
