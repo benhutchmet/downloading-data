@@ -129,13 +129,14 @@ if __name__ == "__main__":
         raise ValueError("Please provide a variable and experiment")
 
     # Set up the parameters
+    # FIXME: Fix hard coding for suite run
     params = {
+        'activity_id': 'DCPP', # Hard coded for now
         'experiment_id': experiment,
         'latest': True,
         'sub_experiment_id': 's1961', # FOR TESTING
         'project': 'CMIP6',
         'table_id': 'Amon',
-        'varaible_id': variable,
     }
 
     # Call the function to get the valid models
