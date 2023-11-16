@@ -165,6 +165,43 @@ def find_valid_nodes_model_list(variable: str, models_list: list,
     # Return the valid nodes
     return valid_nodes
 
+# Define a function which given valid nodes will extract each model dictionary
+# into a single row for a .csv file
+def extract_valid_nodes_to_csv(valid_nodes: dict):
+    """
+    Function which given a dictionary of valid nodes
+    for each model will extract each model dictionary
+    into a single row for a .csv file.
+
+    Parameters:
+    -----------
+
+        valid_nodes: dict
+            A dictionary of valid nodes for each model.
+
+    Returns:
+    --------
+
+        valid_nodes_df: pd.DataFrame
+            A dataframe of the valid nodes for each model.
+    """
+
+    # Initialise an empty dataframe
+    df = pd.DataFrame()
+
+    # Loop through the valid nodes dictionary
+    # using tqdm to show progress
+    for model, nodes in tqdm.tqdm(valid_nodes.items()):
+        # Create a dataframe for the model
+        model_row = pd.DataFrame.from_dict(nodes)
+
+        # Concatenate the model row to the dataframe
+        df = pd.concat([df, model_row], ignore_index=True)
+
+    # Return the dataframe
+    return df
+
+
 if __name__ == "__main__":
 
     # Set up the search connection
@@ -207,3 +244,6 @@ if __name__ == "__main__":
     # Print the valid nodes
     print(f"The valid nodes for {variable} and {experiment} are:")
     print(valid_nodes)
+
+    # Now once we have the valid nodes we want to extract these into a .csv
+    # format to save them for the other scripts
