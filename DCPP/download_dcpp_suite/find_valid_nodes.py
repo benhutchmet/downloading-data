@@ -115,6 +115,55 @@ def check_models_exist(variable: str, models_list: list,
     # Return the valid models
     return valid_models, results_df
 
+# Define a function to find the valid nodes for each model
+def find_valid_nodes_model_list(variable: str, models_list: list,
+                                params: dict, conn: SearchConnection):
+    """
+    Function which given a list of valid models finds
+    the valid nodes for each model at present on ESGF.
+    
+    ---warning---
+    The valid nodes will change with time.
+    
+    Parameters:
+    -----------
+    
+        variable: str
+            The variable to download. e.g. tas, rsds, pr, etc.
+        models_list: list
+            A list of models to check.
+        params: dict
+            A dictionary of parameters to pass to the search.
+        conn: SearchConnection
+            A search connection to ESGF.
+            
+    Returns:
+    --------
+    
+        valid_nodes: dict
+            A dictionary of valid nodes for each model.
+    """
+
+    # Create a dictionary for the valid nodes
+    valid_nodes = {}
+
+    # Loop over the models
+    for model in tqdm.tqdm(models_list):
+        print(f"Finding valid nodes for {model} for {variable} and {params['experiment_id']}")
+
+        # Set up the variable_id for the params
+        params['variable_id'] = variable
+        params['source_id'] = model
+
+        # Append the model to the dictionary
+        valid_nodes[model] = []
+
+        # Find the valid nodes
+        valid_nodes[model] = find_valid_nodes(params=params,
+                                                models_list=[model],
+                                                conn=conn)
+    # Return the valid nodes
+    return valid_nodes
 
 if __name__ == "__main__":
 
@@ -140,8 +189,21 @@ if __name__ == "__main__":
     }
 
     # Call the function to get the valid models
-    valid_models, results_df = check_models_exist(variable, dic.var_models[variable], params, conn)
+    valid_models, results_df = check_models_exist(variable, 
+                                                    dic.var_models[variable], 
+                                                    params, 
+                                                    conn)
 
     # Print the valid models
     print(f"The valid models for {variable} and {experiment} are:")
     print(valid_models)
+
+    # Now we have the valid models we can find the valid nodes for each model
+    valid_nodes = find_valid_nodes_model_list(variable, 
+                                                valid_models, 
+                                                params, 
+                                                conn)
+    
+    # Print the valid nodes
+    print(f"The valid nodes for {variable} and {experiment} are:")
+    print(valid_nodes)
