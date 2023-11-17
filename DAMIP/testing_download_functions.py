@@ -14,7 +14,8 @@ os.environ["ESGF_PYCLIENT_NO_FACETS_STAR_WARNING"] = "on"
 
 
 # Function to check which models are available on ESGF
-def query_models_esgf(experiment_id: str, variable_id: str, table_id: str, activity_id: str, connection: SearchConnection, latest: bool = True, project: str = 'CMIP6') -> set:
+def query_models_esgf(experiment_id: str, variable_id: str, table_id: str, activity_id: str, connection: SearchConnection, latest: bool = True, project: str = 'CMIP6',
+                      sub_experiment_id: str = None) -> set:
     """
     Query the ESGF database for models based on the given parameters.
 
@@ -26,6 +27,7 @@ def query_models_esgf(experiment_id: str, variable_id: str, table_id: str, activ
     connection (SearchConnection): The ESGF database connection.
     latest (bool, optional): Whether to search for the latest version. Defaults to True.
     project (str, optional): The project to search in. Defaults to 'CMIP6'.
+    sub_experiment_id (str, optional): The sub experiment id to search for. Defaults to None.
 
     Returns:
     set: A set of unique 'source_id' values from the search results.
@@ -40,6 +42,10 @@ def query_models_esgf(experiment_id: str, variable_id: str, table_id: str, activ
         "activity_id": activity_id,
         "table_id": table_id
     }
+
+    # Add the sub_experiment_id if it is not None
+    if sub_experiment_id is not None:
+        params["sub_experiment_id"] = sub_experiment_id
 
     # Query the database
     query = connection.new_context(**params)
@@ -300,10 +306,12 @@ def check_file_exists_jasmin(df: pd.DataFrame,
     """
 
     # Create a new column in the dataframe to store whether the file exists
-    df['file_exists'] = False
+    if 'file_exists' not in df.columns:
+        df['file_exists'] = False
 
     # Create a new column in the dataframe to store the file path
-    df['filepath'] = None
+    if 'filepath' not in df.columns:
+        df['filepath'] = None
 
     # Loop over the dataframe
     for i in range(len(df)):
