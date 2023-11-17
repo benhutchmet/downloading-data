@@ -13,7 +13,7 @@ which is used to download the data from ESGF.
 Usage:
 ------
 
-    python find_valid_nodes.py <variable> <experiment>
+    python find_valid_nodes.py <variable> <experiment> <sub_experiment_id>
 
 Parameters:
 -----------
@@ -22,6 +22,8 @@ Parameters:
         The variable to download. e.g. tas, rsds, pr, etc.
     experiment: str
         The experiment to download. e.g. historical, dcppA-hindcast, etc.
+    sub_experiment_id: str
+        The sub_experiment_id to download. e.g. s1960, s1961, etc.
 
 """
 
@@ -212,6 +214,7 @@ if __name__ == "__main__":
         # Get the variable and experiment from the command line
         variable = sys.argv[1]
         experiment = sys.argv[2]
+        sub_experiment_id = sys.argv[3]
     except:
         raise ValueError("Please provide a variable and experiment")
 
@@ -221,7 +224,7 @@ if __name__ == "__main__":
         'activity_id': 'DCPP', # Hard coded for now
         'experiment_id': experiment,
         'latest': True,
-        'sub_experiment_id': 's1961', # FOR TESTING
+        'sub_experiment_id': sub_experiment_id,
         'project': 'CMIP6',
         'table_id': 'Amon',
     }

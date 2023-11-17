@@ -25,7 +25,7 @@ A script which:
 Usage:
 ------
 
-    python extract_context_download.py <variable> <experiment>
+    python extract_context_download.py <variable> <experiment> <sub_experiment_id>
 
 Parameters
 ----------
@@ -34,6 +34,8 @@ Parameters
         The variable to download. e.g. tas, rsds, pr, etc.
     experiment: str
         The experiment to download. e.g. historical, dcppA-hindcast, etc.
+    sub_experiment_id: str
+        The sub_experiment_id to download. e.g. s1960, s1961, etc.
 """
 
 # Local imports
@@ -163,8 +165,9 @@ if __name__ == "__main__":
     try:
         variable = sys.argv[1]
         experiment = sys.argv[2]
+        sub_experiment_id = sys.argv[3]
     except IndexError:
-        raise IndexError("Please provide a variable and experiment to download.")
+        raise IndexError("Please provide a variable and experiment and sub experiment to download.")
 
     # Find the csv containing the model and data node pairs
     # form the filename
@@ -192,7 +195,7 @@ if __name__ == "__main__":
         'activity_id': 'DCPP', # Hard coded for now
         'experiment_id': experiment,
         'latest': True,
-        'sub_experiment_id': 's1963', # FOR TESTING
+        'sub_experiment_id': sub_experiment_id,
         'project': 'CMIP6',
         'table_id': 'Amon',
         'variable_id': variable
@@ -205,10 +208,6 @@ if __name__ == "__main__":
 
     # Print the results list
     print(results_list)
-
-    # For testing only
-    # FIXME: Remove this
-    results_list = results_list[2:4]
 
     # Now we want to extract the file context for each result
     file_context_results, \
