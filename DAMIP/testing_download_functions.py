@@ -460,6 +460,9 @@ def find_valid_nodes(params: dict, models_list: set, conn) -> list:
             if data_node == 'esgf-node2.cmcc.it':
                 print("Skipping esgf-node2.cmcc.it")
                 continue
+            elif data_node == 'esgf3.dkrz.de':
+                print("Skipping esgf3.dkrz.de")
+                continue
 
             # If this data_node has more results, update max_results
             if len(node_results) > max_results['num_results']:

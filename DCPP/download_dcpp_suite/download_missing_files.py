@@ -214,6 +214,32 @@ def download_files(df: pd.DataFrame,
         except requests.exceptions.Timeout:
             # Set up the request with a timeout of 60 seconds
             r = requests.get(url, stream=True, timeout=60)
+        
+        except requests.exceptions.ConnectionError:
+            # Set up the request with a timeout of 90 seconds
+            r = requests.get(url, stream=True, timeout=90)
+
+        except requests.exceptions.RequestException as e:
+            # Print the error
+            print(e)
+
+            # split the url
+            # into its components
+            url_split = url.split('/')
+
+            # Replace the second component with 'esgf-data1.llnl.gov'
+            url_split[2] = 'esgf-data1.llnl.gov'
+
+            # Join the url back together
+            url = '/'.join(url_split)
+
+            try:
+                # Set up the request with a timeout of 30 seconds
+                r = requests.get(url, stream=True, timeout=30)
+            except requests.exceptions.Timeout:
+                AssertionError("Request timed out for backup url")
+
+            
 
         # Set up the total size
         total_size = int(r.headers.get('content-length', 0))
