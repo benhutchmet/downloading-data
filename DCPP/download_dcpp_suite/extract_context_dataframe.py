@@ -137,11 +137,32 @@ def create_dataframe(file_context_list: list,
     # Create an empty dataframe
     df = pd.DataFrame()
 
-    # TODO: Sort out failed results list
-    # Assert that all of the lists within the failed results list
-    # are empty
-    assert all([len(failed_results) == 0 for failed_results in failed_results_list]), \
-        "There are failed results in the failed results list."
+    # # Assert that all of the lists within the failed results list
+    # # are empty
+    # assert all([len(failed_results) == 0 for failed_results in failed_results_list]), \
+    #     "There are failed results in the failed results list."
+
+    # If any of the lists within the failed results list are not empty
+    if any([len(failed_results) != 0 for failed_results in failed_results_list]):
+        print("There are failed results in the failed results list.")
+        print("Failed results list:")
+        print(failed_results_list)
+
+        # Loop over the failed results list
+        for i in tqdm(range(failed_results_list)):
+            try:
+                # Extract the file context
+                hit = failed_results_list[i].file_context().search()
+
+                files = map(lambda f: {'filename': f.filename, 'url': f.download_url}, hit)
+
+                # Extend the file context list
+                file_context_list.extend(files)
+
+                # Log the process
+                print(f"Successfully extracted file context for {failed_results_list[i]}")
+            except:
+                ValueError(f"Failed to extract file context for {failed_results_list[i]}")
 
     # Loop over the file context list
     for file_context in tqdm.tqdm(file_context_list):
