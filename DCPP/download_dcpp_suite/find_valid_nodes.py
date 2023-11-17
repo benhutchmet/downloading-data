@@ -267,7 +267,7 @@ if __name__ == "__main__":
     current_date = datetime.now().strftime("%Y%m%d")
 
     # Create a filename for the .csv file
-    filename = f"{variable}_{experiment}_valid_nodes_{current_date}.csv"
+    filename = f"{variable}_{experiment}_{sub_experiment_id}_valid_nodes_{current_date}.csv"
 
     # Form the full path
     full_path = os.path.join(save_dir, filename)

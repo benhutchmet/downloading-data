@@ -26,6 +26,7 @@ Usage:
 ------
 
     python download_missing_files.py <variable> <experiment> <current_date>
+                                        <sub_experiment_id>
 
 Parameters:
 -----------
@@ -36,6 +37,8 @@ Parameters:
         The experiment to download. e.g. historical, dcppA-hindcast, etc.
     current_date: str
         The current date. format: YYYYMMDD, e.g. 20231117
+    sub_experiment_id: str
+        The sub_experiment_id to download. e.g. s1960, s1961, etc.
 
 """
 
@@ -69,6 +72,7 @@ import dictionaries as dic
 # Function to find the csv file
 def find_load_csv(variable: str,
                 experiment: str,
+                sub_experiment_id: str,
                 current_date: str,
                 save_dir: str):
     """
@@ -81,6 +85,8 @@ def find_load_csv(variable: str,
             The variable to download. e.g. tas, rsds, pr, etc.
         experiment: str
             The experiment to download. e.g. historical, dcppA-hindcast, etc.
+        sub_experiment_id: str
+            The sub_experiment_id to download. e.g. s1960, s1961, etc.
         current_date: str
             The current date. format: YYYYMMDD, e.g. 20231117
         save_dir: str
@@ -94,7 +100,7 @@ def find_load_csv(variable: str,
     """
 
     # Set up the filename
-    filename = f"{variable}_{experiment}_file_context_{current_date}.csv"
+    filename = f"{variable}_{experiment}_{sub_experiment_id}_file_context_{current_date}.csv"
 
     # Set up the path
     path = os.path.join(save_dir, filename)
@@ -249,17 +255,19 @@ if __name__ == "__main__":
         variable = sys.argv[1]
         experiment = sys.argv[2]
         current_date = sys.argv[3]
+        sub_experiment_id = sys.argv[4]
     except IndexError:
         raise IndexError("Please provide the variable, experiment and current date.")
     
     # Load the csv into a dataframe
-    df = find_load_csv(variable, experiment, current_date, dic.download_csv_path)
+    df = find_load_csv(variable, experiment,
+                        sub_experiment_id, current_date, dic.download_csv_path)
 
     # # Print the dataframe
     print(df)
 
     # Download the files
-    df = download_files(df, dic.download_csv_path)
+    df = download_files(df, dic.dcpp_dir_gws)
 
     # Print the dataframe
     print(df)
