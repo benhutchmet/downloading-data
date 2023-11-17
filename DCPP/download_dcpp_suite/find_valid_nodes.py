@@ -218,6 +218,9 @@ if __name__ == "__main__":
     except:
         raise ValueError("Please provide a variable and experiment")
 
+    # Modify the sub_experiment_id
+    sub_experiment_id = f"s{sub_experiment_id}"
+
     # Set up the parameters
     # FIXME: Fix hard coding for suite run
     params = {

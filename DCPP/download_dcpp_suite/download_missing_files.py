@@ -259,6 +259,9 @@ if __name__ == "__main__":
     except IndexError:
         raise IndexError("Please provide the variable, experiment and current date.")
     
+    # Modify the sub_experiment_id
+    sub_experiment_id = f"s{sub_experiment_id}"
+
     # Load the csv into a dataframe
     df = find_load_csv(variable, experiment,
                         sub_experiment_id, current_date, dic.download_csv_path)

@@ -3,7 +3,7 @@
     [[parameters]]
         variable="rsds"
         experiment="dcppA-hindcast"
-        sub_experiment_id="s1961"
+        sub_experiment_id=1960..1970
         current_date="20231117"
 
 [scheduling]

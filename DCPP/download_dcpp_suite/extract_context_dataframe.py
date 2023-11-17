@@ -169,6 +169,9 @@ if __name__ == "__main__":
     except IndexError:
         raise IndexError("Please provide a variable and experiment and sub experiment to download.")
 
+    # Modify the sub_experiment_id
+    sub_experiment_id = f"s{sub_experiment_id}"
+
     # Find the csv containing the model and data node pairs
     # form the filename
     current_date = datetime.now().strftime("%Y%m%d")
