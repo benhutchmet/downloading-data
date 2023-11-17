@@ -455,6 +455,12 @@ def find_valid_nodes(params: dict, models_list: set, conn) -> list:
             node_results = node_query.search()
             print(len(node_results))
 
+            # If the data node is esgf-node2.cmcc.it
+            # loop over to the next data node
+            if data_node == 'esgf-node2.cmcc.it':
+                print("Skipping esgf-node2.cmcc.it")
+                continue
+
             # If this data_node has more results, update max_results
             if len(node_results) > max_results['num_results']:
                 max_results = {'source_id': source_id, 'data_node': data_node, 'num_results': len(node_results)}

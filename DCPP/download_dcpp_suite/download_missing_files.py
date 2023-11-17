@@ -204,8 +204,16 @@ def download_files(df: pd.DataFrame,
         # Replace the file exists column with true
         df_to_download.loc[i, 'file_exists'] = True
 
-        # Set up the request
-        r = requests.get(url, stream=True)
+        # EXample url:
+        # https://esgf-data1.llnl.gov/thredds/fileServer/css03_data/CMIP6/DCPP/CMCC/CMCC-CM2-SR5/dcppA-hindcast/s1963-r11i1p1f1/Amon/rsds/gn/v20230130/rsds_Amon_CMCC-CM2-SR5_dcppA-hindcast_s1963-r11i1p1f1_gn_196311-197312.nc
+
+        try:
+            # Set up the request with a timeout of 30 seconds
+            r = requests.get(url, stream=True, timeout=30)
+
+        except requests.exceptions.Timeout:
+            # Set up the request with a timeout of 60 seconds
+            r = requests.get(url, stream=True, timeout=60)
 
         # Set up the total size
         total_size = int(r.headers.get('content-length', 0))
@@ -299,8 +307,8 @@ if __name__ == "__main__":
         # Concatenate the dataframes
         df = pd.concat([df_existing, df], ignore_index=True)
 
-        # Drop the duplicates
-        df = df.drop_duplicates()
+        # Drop the duplicates in the filename column
+        df = df.drop_duplicates(subset=['filename'])
 
         # Save the dataframe
         df.to_csv(path, index=False)
