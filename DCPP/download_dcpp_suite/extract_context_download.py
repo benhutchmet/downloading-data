@@ -46,6 +46,7 @@ import pandas as pd
 import requests
 import tqdm as tqdm
 from datetime import datetime
+from datetime import timedelta
 
 # Set the environment to on
 os.environ['ESGF_PYCLIENT_NO_FACETS_STAR_WARNING'] = "on"
@@ -168,6 +169,9 @@ if __name__ == "__main__":
     # Find the csv containing the model and data node pairs
     # form the filename
     current_date = datetime.now().strftime("%Y%m%d")
+    
+    # FIXME: Minus 1 from the day for testing
+    current_date = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
 
     # Set up the filename
     filename = f"{variable}_{experiment}_valid_nodes_{current_date}.csv"
