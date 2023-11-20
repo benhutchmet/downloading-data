@@ -54,6 +54,10 @@ import tqdm as tqdm
 from datetime import datetime
 from datetime import timedelta
 
+# For retrying the request
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+
 # Set the environment to on
 os.environ['ESGF_PYCLIENT_NO_FACETS_STAR_WARNING'] = "on"
 
@@ -211,6 +215,16 @@ def download_files(df: pd.DataFrame,
             # Set up the request with a timeout of 30 seconds
             r = requests.get(url, stream=True, timeout=90)
 
+            # Set up the retry factors
+            retry = Retry(connect=3, backoff_factor=0.5)
+
+            # Set up the adapter
+            adapter = HTTPAdapter(max_retries=retry)
+
+            # Mount the adapter
+            r.mount('http://', adapter)
+            r.mount('https://', adapter)
+    
         except requests.exceptions.Timeout:
             # split the url
             # into its components
