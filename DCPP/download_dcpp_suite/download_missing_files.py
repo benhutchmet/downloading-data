@@ -118,7 +118,8 @@ def find_load_csv(variable: str,
 # Define a function for downloading the files
 # Which don't already exist on JASMIN
 def download_files(df: pd.DataFrame,
-                   download_dir: str):
+                   download_dir: str,
+                   conn: SearchConnection):
     """
     Download the files which do not already exist on JASMIN.
 
@@ -129,6 +130,8 @@ def download_files(df: pd.DataFrame,
             A dataframe containing the results of the search.
         download_dir: str
             The directory in which to save the downloaded files.
+        conn: SearchConnection
+            A search connection to ESGF.
 
     Returns:
     --------
@@ -239,12 +242,84 @@ def download_files(df: pd.DataFrame,
             print("Using backup url - esgf-data1.llnl.gov")
             # split the url
             # into its components
+            # Find the other valid urls
+            # TODO: Find other URLs which are valid
             print("Current url: {}".format(url))
             url_split = url.split('/')
-            # Replace the second component with 'esgf-data1.llnl.gov'
-            url_split[2] = 'esgf-data1.llnl.gov'
-            # Join the url back together
-            url = '/'.join(url_split)
+            
+            # Example url:
+            # https://esgf-data1.llnl.gov/thredds/fileServer/css03_data/CMIP6/DCPP/EC-Earth-Consortium/EC-Earth3/dcppA-hindcast/s1962-r5i1p1f1/Amon/vas/gr/v20201216/vas_Amon_EC-Earth3_dcppA-hindcast_s1962-r5i1p1f1_gr_197211-197310.nc
+
+            # Set up a list for the valid nodes
+            valid_nodes = []
+
+            # Extract and print the current data node
+            current_data_node = url_split[2]
+            print("Current data node: {}".format(current_data_node))
+
+            # Set up the sub_experiment_id
+            sub_experiment_id_full = url_split[11]
+
+            # Split the sub_experiment_id by '-'
+            sub_experiment_id_split = sub_experiment_id_full.split('-')
+
+            # Set up the new sub_experiment_id
+            sub_experiment_id =  sub_experiment_id_split[0] 
+
+            # Set up the variant label
+            variant_label = sub_experiment_id_split[1]
+
+            # Set up the parameters
+            params = {
+                'activity_id': url_split[7],
+                'experiment_id': url_split[10],
+                'latest': True,
+                'sub_experiment_id': sub_experiment_id,
+                'project': url_split[6],
+                'table_id': url_split[12],
+                'variable_id': variable,
+                'source_id': url_split[9],
+                'variant_label': variant_label,
+            }
+
+            # Query the database
+            query = conn.new_context(**params)
+
+            # Get the results
+            results = query.search()
+
+            # Print the length of the results
+            print("Number of results: {}".format(len(results)))
+
+            # Identify the unique nodes which are valid
+            data_node_set = set([result.json['data_node'] for result in results])
+
+            # Print the data node set
+            print("Data node set: {}".format(data_node_set))
+
+            # Convert to a list and print
+            data_node_list = list(data_node_set)
+            print("Data node list: {}".format(data_node_list))
+
+            # Remove the current data node from the list
+            data_node_list.remove(current_data_node)
+
+            # If the list is empty
+            if not data_node_list:
+                # Raise an error
+                raise ValueError("No other valid data nodes found")
+            elif len(data_node_list) == 1:
+                # Set the new data node
+                new_data_node = data_node_list[0]
+
+                # Replace the current data node with the new data node
+                url_split[2] = new_data_node
+
+                # Join the url back together
+                url = '/'.join(url_split)
+            else:
+                print("More than one valid data node found")
+                raise ValueError("More than one valid data node found")
 
             # Print the new url
             print("New url: {}".format(url))
@@ -361,7 +436,7 @@ if __name__ == "__main__":
     print(df)
 
     # Download the files
-    df = download_files(df, dic.dcpp_dir_gws)
+    df = download_files(df, dic.dcpp_dir_gws, conn)
 
     # Print the dataframe
     print(df)
