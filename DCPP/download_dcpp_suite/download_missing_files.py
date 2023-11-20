@@ -226,7 +226,7 @@ def download_files(df: pd.DataFrame,
 
         try:
             print("Downloading file {}".format(full_path))
-            print("First attempt"")
+            print("First attempt")
             # Set up the request with a timeout of 30 seconds
             r = s.get(url, stream=True, timeout=90, verify=False)
     
