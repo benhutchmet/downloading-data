@@ -236,7 +236,7 @@ def download_files(df: pd.DataFrame,
             print("Using backup url - esgf-data1.llnl.gov")
             # split the url
             # into its components
-            print("Current url: {}".format(url)
+            print("Current url: {}".format(url))
             url_split = url.split('/')
             # Replace the second component with 'esgf-data1.llnl.gov'
             url_split[2] = 'esgf-data1.llnl.gov'
@@ -245,7 +245,7 @@ def download_files(df: pd.DataFrame,
 
             # Print the new url
             print("New url: {}".format(url))
-            
+
             try:
                 # Set up the request with a timeout of 90 seconds
                 r = s.get(url, stream=True, timeout=90, verify=False)
