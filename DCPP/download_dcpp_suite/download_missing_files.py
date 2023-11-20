@@ -248,7 +248,7 @@ def download_files(df: pd.DataFrame,
 
             try:
                 # Set up the request with a timeout of 90 seconds
-                r = s.get(url, stream=True, timeout=90, verify=False)
+                r_n = s.get(url, stream=True, timeout=90, verify=False)
             except requests.exceptions.ConnectionError:
                 AssertionError("Connection error for backup url")
     
@@ -283,18 +283,33 @@ def download_files(df: pd.DataFrame,
         # Set up the chunk size
         block_size = 1024
 
-        # Download the file
-        with open(full_path, 'wb') as f:
-            for data in tqdm(r.iter_content(block_size),
-                            total=total_size//block_size, 
-                            unit='KiB', 
-                            unit_scale=True):
-                f.write(data)
+        # if r_n doesn't exist
+        if not r_n:
+            # Download the file
+            with open(full_path, 'wb') as f:
+                for data in tqdm(r.iter_content(block_size),
+                                total=total_size//block_size, 
+                                unit='KiB', 
+                                unit_scale=True):
+                    f.write(data)
 
-            # If the total size is not equal to zero
-            if total_size != 0:
-                print("File {} downloaded successfully".format(full_path))
-                print("File is not empty")
+                # If the total size is not equal to zero
+                if total_size != 0:
+                    print("File {} downloaded successfully".format(full_path))
+                    print("File is not empty")
+        else:
+            # Download the file
+            with open(full_path, 'wb') as f:
+                for data in tqdm(r_n.iter_content(block_size),
+                                total=total_size//block_size, 
+                                unit='KiB', 
+                                unit_scale=True):
+                    f.write(data)
+
+                # If the total size is not equal to zero
+                if total_size != 0:
+                    print("File {} downloaded successfully".format(full_path))
+                    print("File is not empty")
 
     # Assert that all rows in file_exists are True
     assert all(df_to_download['file_exists'] == True), "Not all files downloaded"
