@@ -209,7 +209,7 @@ def download_files(df: pd.DataFrame,
 
         try:
             # Set up the request with a timeout of 30 seconds
-            r = requests.get(url, stream=True, timeout=60)
+            r = requests.get(url, stream=True, timeout=90)
 
         except requests.exceptions.Timeout:
             # split the url
@@ -223,10 +223,12 @@ def download_files(df: pd.DataFrame,
             url = '/'.join(url_split)
 
             try:
-                # Set up the request with a timeout of 30 seconds
-                r = requests.get(url, stream=True, timeout=30)
+                # Set up the request with a timeout of 90 seconds
+                r = requests.get(url, stream=True, timeout=90)
             except requests.exceptions.Timeout:
                 AssertionError("Request timed out for backup url")
+            except requests.exceptions.ConnectionError:
+                AssertionError("Connection error for backup url")
 
             
 
