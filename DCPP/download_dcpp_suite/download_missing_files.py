@@ -211,19 +211,22 @@ def download_files(df: pd.DataFrame,
         # EXample url:
         # https://esgf-data1.llnl.gov/thredds/fileServer/css03_data/CMIP6/DCPP/CMCC/CMCC-CM2-SR5/dcppA-hindcast/s1963-r11i1p1f1/Amon/rsds/gn/v20230130/rsds_Amon_CMCC-CM2-SR5_dcppA-hindcast_s1963-r11i1p1f1_gn_196311-197312.nc
 
+        # Create a Session object
+        s = requests.Session()
+
+        # Set up the retry factors
+        retry = Retry(connect=3, backoff_factor=0.5)
+
+        # Set up the adapter
+        adapter = HTTPAdapter(max_retries=retry)
+
+        # Mount the adapter
+        s.mount('http://', adapter)
+        s.mount('https://', adapter)
+
         try:
             # Set up the request with a timeout of 30 seconds
-            r = requests.get(url, stream=True, timeout=90)
-
-            # Set up the retry factors
-            retry = Retry(connect=3, backoff_factor=0.5)
-
-            # Set up the adapter
-            adapter = HTTPAdapter(max_retries=retry)
-
-            # Mount the adapter
-            r.mount('http://', adapter)
-            r.mount('https://', adapter)
+            r = s.get(url, stream=True, timeout=90)
     
         except requests.exceptions.Timeout:
             # split the url
@@ -238,7 +241,7 @@ def download_files(df: pd.DataFrame,
 
             try:
                 # Set up the request with a timeout of 90 seconds
-                r = requests.get(url, stream=True, timeout=90)
+                r = s.get(url, stream=True, timeout=90)
             except requests.exceptions.Timeout:
                 AssertionError("Request timed out for backup url")
             except requests.exceptions.ConnectionError:
