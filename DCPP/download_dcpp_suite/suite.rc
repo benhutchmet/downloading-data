@@ -27,4 +27,4 @@
         python download_missing_files.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_current_date} ${CYLC_TASK_PARAM_sub_experiment_id}
         """
         [[[job]]]
-            execution time limit = PT40M
+            execution time limit = PT210M

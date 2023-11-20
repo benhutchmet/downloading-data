@@ -209,20 +209,9 @@ def download_files(df: pd.DataFrame,
 
         try:
             # Set up the request with a timeout of 30 seconds
-            r = requests.get(url, stream=True, timeout=30)
+            r = requests.get(url, stream=True, timeout=60)
 
         except requests.exceptions.Timeout:
-            # Set up the request with a timeout of 60 seconds
-            r = requests.get(url, stream=True, timeout=60)
-        
-        except requests.exceptions.ConnectionError:
-            # Set up the request with a timeout of 90 seconds
-            r = requests.get(url, stream=True, timeout=90)
-
-        except requests.exceptions.RequestException as e:
-            # Print the error
-            print(e)
-
             # split the url
             # into its components
             url_split = url.split('/')
