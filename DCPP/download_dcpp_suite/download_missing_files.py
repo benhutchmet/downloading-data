@@ -225,10 +225,16 @@ def download_files(df: pd.DataFrame,
         s.mount('https://', adapter)
 
         try:
+            print("Downloading file {}".format(full_path))
+            print("First attempt"")
             # Set up the request with a timeout of 30 seconds
             r = s.get(url, stream=True, timeout=90, verify=False)
     
         except requests.exceptions.Timeout:
+            print("Timeout error")
+            print("Trying again")
+            print("Second attempt")
+            print("Using backup url - esgf-data1.llnl.gov")
             # split the url
             # into its components
             url_split = url.split('/')
