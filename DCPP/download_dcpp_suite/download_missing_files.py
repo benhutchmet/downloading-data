@@ -224,6 +224,9 @@ def download_files(df: pd.DataFrame,
         s.mount('http://', adapter)
         s.mount('https://', adapter)
 
+        backup_url = False
+        r_n = None
+
         try:
             print("Downloading file {}".format(full_path))
             print("First attempt")
@@ -245,6 +248,8 @@ def download_files(df: pd.DataFrame,
 
             # Print the new url
             print("New url: {}".format(url))
+
+            backup_url = True
 
             try:
                 # Set up the request with a timeout of 90 seconds
@@ -283,8 +288,8 @@ def download_files(df: pd.DataFrame,
         # Set up the chunk size
         block_size = 1024
 
-        # if r_n doesn't exist
-        if not r_n:
+        # if backup_url is False:
+        if not backup_url:
             # Download the file
             with open(full_path, 'wb') as f:
                 for data in tqdm(r.iter_content(block_size),
@@ -297,7 +302,8 @@ def download_files(df: pd.DataFrame,
                 if total_size != 0:
                     print("File {} downloaded successfully".format(full_path))
                     print("File is not empty")
-        else:
+        #elif backup_url is True:
+        elif backup_url:
             # Download the file
             with open(full_path, 'wb') as f:
                 for data in tqdm(r_n.iter_content(block_size),
