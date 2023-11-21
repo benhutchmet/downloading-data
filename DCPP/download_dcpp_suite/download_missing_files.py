@@ -228,6 +228,7 @@ def download_files(df: pd.DataFrame,
         s.mount('https://', adapter)
 
         backup_url = False
+        backup_backup_url = False
         r_n = None
 
         try:
@@ -253,9 +254,15 @@ def download_files(df: pd.DataFrame,
             # Set up a list for the valid nodes
             valid_nodes = []
 
+            # Nodes tried list
+            nodes_tried = []
+
             # Extract and print the current data node
             current_data_node = url_split[2]
             print("Current data node: {}".format(current_data_node))
+
+            # Append the current data node to the nodes tried list
+            nodes_tried.append(current_data_node)
 
             # Set up the sub_experiment_id
             sub_experiment_id_full = url_split[11]
@@ -321,9 +328,18 @@ def download_files(df: pd.DataFrame,
 
                 # Join the url back together
                 url = '/'.join(url_split)
-            else:
-                print("More than one valid data node found")
-                raise ValueError("More than one valid data node found")
+            elif len(data_node_list) > 1:
+                # Set the new data node
+                new_data_node = data_node_list[0]
+
+                # Replace the current data node with the new data node
+                url_split[2] = new_data_node
+
+                # Join the url back together
+                url = '/'.join(url_split)
+
+            # Append the new data node to the valid nodes list
+            nodes_tried.append(new_data_node)
 
             # Print the new url
             print("New url: {}".format(url))
@@ -334,7 +350,34 @@ def download_files(df: pd.DataFrame,
                 # Set up the request with a timeout of 90 seconds
                 r_n = s.get(url, stream=True, timeout=90, verify=False)
             except requests.exceptions.ConnectionError:
-                AssertionError("Connection error for backup url")
+                print("Third time lucky")
+                # Remove the tried nodes from the list
+                data_node_list.remove(node for node in nodes_tried)
+
+                # If the list is empty
+                if not data_node_list:
+                    raise ValueError("No valid data nodes found")
+                elif len(data_node_list) == 1:
+                    # Set the new data node
+                    new_data_node = data_node_list[0]
+
+                    # Replace the current data node with the new data node
+                    url_split[2] = new_data_node
+
+                    # Join the url back together
+                    url = '/'.join(url_split)
+
+                    # Print the new url
+                    print("New url: {}".format(url))
+
+                    # Set the backup url to True
+                    backup_backup_url = True
+
+                    # Set up the request with a timeout of 90 seconds
+                    try:
+                        r_n = s.get(url, stream=True, timeout=90, verify=False)
+                    except requests.exceptions.ConnectionError:
+                        raise ValueError("No valid data nodes found - better luck next time")
     
         # If backup_url is False
         if not backup_url:
