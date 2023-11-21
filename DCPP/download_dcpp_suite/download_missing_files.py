@@ -249,6 +249,9 @@ def download_files(df: pd.DataFrame,
             print("Current url: {}".format(url))
             url_split = url.split('/')
             
+            # Within url split, find the index of CMIP6
+            project_index = url_split.index('CMIP6')
+
             # Example url:
             # https://esgf-data1.llnl.gov/thredds/fileServer/css03_data/CMIP6/DCPP/EC-Earth-Consortium/EC-Earth3/dcppA-hindcast/s1962-r5i1p1f1/Amon/vas/gr/v20201216/vas_Amon_EC-Earth3_dcppA-hindcast_s1962-r5i1p1f1_gr_197211-197310.nc
 
@@ -266,7 +269,7 @@ def download_files(df: pd.DataFrame,
             nodes_tried.append(current_data_node)
 
             # Set up the sub_experiment_id
-            sub_experiment_id_full = url_split[11]
+            sub_experiment_id_full = url_split[project_index + 5]
 
             # Split the sub_experiment_id by '-'
             sub_experiment_id_split = sub_experiment_id_full.split('-')
@@ -279,16 +282,21 @@ def download_files(df: pd.DataFrame,
 
             # Set up the parameters
             params = {
-                'activity_id': url_split[7],
-                'experiment_id': url_split[10],
+                'activity_id': url_split[project_index + 1],
+                'experiment_id': url_split[project_index + 4],
                 'latest': True,
                 'sub_experiment_id': sub_experiment_id,
-                'project': url_split[6],
-                'table_id': url_split[12],
+                'project': 'CMIP6', # Hardcoded
+                'table_id': url_split[project_index + 6],
                 'variable_id': variable,
-                'source_id': url_split[9],
+                'source_id': url_split[project_index + 3],
                 'variant_label': variant_label,
             }
+
+            # Example url:
+            #http://esgf.bsc.es/thredds/fileServer/esg_dataroot/a1ua-DCPP-r3-full/CMIP6/DCPP/EC-Earth-Consortium/EC-Earth3/dcppA-hindcast/s1960-r3i1p1f1/Amon/vas/gr/v20201215/vas_Amon_EC-Earth3_dcppA-hindcast_s1960-r3i1p1f1_gr_196911-197010.nc
+            # https://noresg.nird.sigma2.no/thredds/fileServer/css03_data/CMIP6/DCPP/NCC/NorCPM1/dcppA-hindcast/s1964-r3i1p1f1/Amon/vas/gn/v20190914/vas_Amon_NorCPM1_dcppA-hindcast_s1964-r3i1p1f1_gn_196410-197412.nc
+
 
             # Query the database
             query = conn.new_context(**params)
