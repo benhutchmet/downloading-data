@@ -53,6 +53,7 @@ import requests
 import tqdm as tqdm
 from datetime import datetime
 from datetime import timedelta
+from requests.models import Response
 
 # For retrying the request
 from requests.adapters import HTTPAdapter
@@ -378,16 +379,22 @@ def download_files(df: pd.DataFrame,
                         r_n = s.get(url, stream=True, timeout=90, verify=False)
                     except requests.exceptions.ConnectionError:
                         raise ValueError("No valid data nodes found - better luck next time")
-    
+
+
         # If backup_url is False
         if not backup_url:
+            # Assert that r is an instance of Response
+            assert isinstance(r, Response), "r is not an instance of Response"
             # Print the type of r
             print("Type of r: {}".format(type(r)))
+
         # If backup_url is True
         elif backup_url:
+            # Assert that r_n is an instance of Response
+            assert isinstance(r_n, Response), "r_n is not an instance of Response"
             # Print the type of r_n
             print("Type of r_n: {}".format(type(r_n)))
-            
+
 
         # Set up the total size
         total_size = int(r.headers.get('content-length', 0))

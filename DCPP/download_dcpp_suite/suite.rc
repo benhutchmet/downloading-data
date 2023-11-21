@@ -3,7 +3,7 @@
     [[parameters]]
         variable="vas"
         experiment="dcppA-hindcast"
-        sub_experiment_id=1960
+        sub_experiment_id=1963
         current_date="20231120"
 
 [scheduling]
