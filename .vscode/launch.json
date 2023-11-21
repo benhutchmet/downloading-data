@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["rsds", "dcppA-hindcast", "20231117"]
+            "args": ["vas", "dcppA-hindcast", "1960", "20231120"]
         }
     ]
 }

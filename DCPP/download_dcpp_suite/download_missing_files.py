@@ -301,13 +301,17 @@ def download_files(df: pd.DataFrame,
             data_node_list = list(data_node_set)
             print("Data node list: {}".format(data_node_list))
 
-            # Remove the current data node from the list
-            data_node_list.remove(current_data_node)
+            # if the current data node is in the list
+            if current_data_node in data_node_list:
+                # Remove the current data node from the list
+                data_node_list.remove(current_data_node)
+            else:
+                print("Current data node not in list")
 
             # If the list is empty
             if not data_node_list:
                 # Raise an error
-                raise ValueError("No other valid data nodes found")
+                raise ValueError("No valid data nodes found")
             elif len(data_node_list) == 1:
                 # Set the new data node
                 new_data_node = data_node_list[0]
@@ -332,29 +336,14 @@ def download_files(df: pd.DataFrame,
             except requests.exceptions.ConnectionError:
                 AssertionError("Connection error for backup url")
     
-        # except requests.exceptions.Timeout:
-        #     print("Timeout error")
-        #     print("Trying again")
-        #     print("Second attempt")
-        #     print("Using backup url - esgf-data1.llnl.gov")
-        #     # split the url
-        #     # into its components
-        #     url_split = url.split('/')
-
-        #     # Replace the second component with 'esgf-data1.llnl.gov'
-        #     url_split[2] = 'esgf-data1.llnl.gov'
-
-        #     # Join the url back together
-        #     url = '/'.join(url_split)
-
-        #     try:
-        #         # Set up the request with a timeout of 90 seconds
-        #         r = s.get(url, stream=True, timeout=90, verify=False)
-        #     except requests.exceptions.Timeout:
-        #         AssertionError("Request timed out for backup url")
-        #     except requests.exceptions.ConnectionError:
-        #         AssertionError("Connection error for backup url")
-
+        # If backup_url is False
+        if not backup_url:
+            # Print the type of r
+            print("Type of r: {}".format(type(r)))
+        # If backup_url is True
+        elif backup_url:
+            # Print the type of r_n
+            print("Type of r_n: {}".format(type(r_n)))
             
 
         # Set up the total size
