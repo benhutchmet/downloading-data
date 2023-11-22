@@ -54,6 +54,7 @@ import tqdm as tqdm
 from datetime import datetime
 from datetime import timedelta
 from requests.models import Response
+from requests.exceptions import HTTPError
 
 # For retrying the request
 from requests.adapters import HTTPAdapter
@@ -241,7 +242,7 @@ def download_files(df: pd.DataFrame,
             print("Connection error")
             print("Trying again")
             print("Second attempt")
-            print("Using backup url - esgf-data1.llnl.gov")
+            print("Using backup url")
             # split the url
             # into its components
             # Find the other valid urls
@@ -301,8 +302,18 @@ def download_files(df: pd.DataFrame,
             # Query the database
             query = conn.new_context(**params)
 
-            # Get the results
-            results = query.search()
+            # Try to get the results
+            try:
+                print("searching for other valid nodes")
+                # Get the results
+                results = query.search()
+            except HTTPError as http_err:
+                print(f"HTTPError raised for {url}")
+                print(f"HTTP error occurred: {http_err}")
+                print("Unlucky")
+                print("Trying again")
+                print("Second attempt")
+                results = query.search()
 
             # Print the length of the results
             print("Number of results: {}".format(len(results)))
