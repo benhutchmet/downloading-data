@@ -396,6 +396,9 @@ def download_files(df: pd.DataFrame,
             # Print the type of r
             print("Type of r: {}".format(type(r)))
 
+            # Set up the total size
+            total_size = int(r.headers.get('content-length', 0))
+
         # If backup_url is True
         elif backup_url:
             # Assert that r_n is an instance of Response
@@ -403,9 +406,8 @@ def download_files(df: pd.DataFrame,
             # Print the type of r_n
             print("Type of r_n: {}".format(type(r_n)))
 
-
-        # Set up the total size
-        total_size = int(r.headers.get('content-length', 0))
+            # Set up the total size
+            total_size = int(r_n.headers.get('content-length', 0))
 
         # Set up the chunk size
         block_size = 1024
