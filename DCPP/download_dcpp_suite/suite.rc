@@ -1,16 +1,16 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        variable="vas"
+        variable="psl"
         experiment="dcppA-hindcast"
-        sub_experiment_id=1960
-        current_date="20231120"
+        sub_experiment_id=1960,1961,1962,1963,1964,1965
+        current_date="20231122"
 
 [scheduling]
     [[dependencies]]
         graph = """
-        download_missing_files<variable><experiment><current_date><sub_experiment_id>
-        """
+        find_valid_nodes<variable><experiment><sub_experiment_id> => extract_context_dataframe<variable><experiment><sub_experiment_id>
+        extract_context_dataframe<variable><experiment><sub_experiment_id> => download_missing_files<variable><experiment><current_date><sub_experiment_id>        """
 
 [runtime]
     [[root]]
@@ -20,6 +20,22 @@
             batch system = slurm
         [[[directives]]]
             --partition=test
+    [[find_valid_nodes<variable><experiment><sub_experiment_id>]]
+        script = """
+        module load jaspy/3.10/r20230718
+        cd ${CYLC_SUITE_RUN_DIR}/
+        python find_valid_nodes.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_sub_experiment_id}
+        """
+        [[[job]]]
+            execution time limit = PT10M
+    [[extract_context_dataframe<variable><experiment><sub_experiment_id>]]
+        script="""
+        module load jaspy/3.10/r20230718
+        cd ${CYLC_SUITE_RUN_DIR}/
+        python extract_context_dataframe.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_sub_experiment_id}
+        """
+        [[[job]]]
+            execution time limit = PT40M
     [[download_missing_files<variable><experiment><current_date><sub_experiment_id>]]
         script="""
         module load jaspy/3.10/r20230718
