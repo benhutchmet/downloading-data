@@ -2,7 +2,7 @@
 search_connection = 'https://esgf-node.llnl.gov/esg-search'
 
 # List of variables
-variables = ['tas','psl', 'uas', 'vas', 'rsds']
+variables = ['tas','psl', 'uas', 'vas', 'rsds', 'sfcWind']
 
 variables_test = ['rsds']
 
