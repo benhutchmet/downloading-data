@@ -31,6 +31,13 @@ var_models_test = {
     'rsds': models_rsds
 }
 
+# var models test pr
+var_models_test_pr = {
+    'pr': models_pr
+}
+
+variables_test_pr = ['pr']
+
 # Set up the path for the downloaded data
 download_csv_path = "/gws/nopw/j04/canari/users/benhutch/dcppA-hindcast/download_data/"
 
