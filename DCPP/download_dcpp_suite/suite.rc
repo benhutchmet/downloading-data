@@ -20,7 +20,7 @@
         [[[job]]]
             batch system = slurm
         [[[directives]]]
-            --partition=test
+            --partition=short-serial
     [[find_valid_nodes<variable><experiment><sub_experiment_id>]]
         script = """
         module load jaspy
