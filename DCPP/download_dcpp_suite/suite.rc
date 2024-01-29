@@ -1,10 +1,10 @@
 [cylc]
     UTC mode = True # Ignore DST
     [[parameters]]
-        variable="psl"
+        variable="rsds"
         experiment="dcppA-hindcast"
-        sub_experiment_id=2015,2016,2017,2018,2019,2020
-        current_date="20231201"
+        sub_experiment_id=1960..2014
+        current_date="20240129"
 
 [scheduling]
     [[dependencies]]
@@ -22,7 +22,7 @@
             --partition=test
     [[find_valid_nodes<variable><experiment><sub_experiment_id>]]
         script = """
-        module load jaspy/3.10/r20230718
+        module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
         python find_valid_nodes.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_sub_experiment_id}
         """
@@ -30,7 +30,7 @@
             execution time limit = PT10M
     [[extract_context_dataframe<variable><experiment><sub_experiment_id>]]
         script="""
-        module load jaspy/3.10/r20230718
+        module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
         python extract_context_dataframe.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_sub_experiment_id}
         """
@@ -38,7 +38,7 @@
             execution time limit = PT75M
     [[download_missing_files<variable><experiment><current_date><sub_experiment_id>]]
         script="""
-        module load jaspy/3.10/r20230718
+        module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
         python download_missing_files.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_current_date} ${CYLC_TASK_PARAM_sub_experiment_id}
         """
