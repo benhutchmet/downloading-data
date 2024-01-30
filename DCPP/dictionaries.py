@@ -23,7 +23,8 @@ var_models = {
     'psl': models,
     'uas': models_uas_vas,
     'vas': models_uas_vas,
-    'rsds': models_rsds
+    'rsds': models_rsds,
+    'pr': models_pr
 }
 
 # var_models test
