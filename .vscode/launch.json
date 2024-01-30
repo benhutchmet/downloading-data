@@ -5,13 +5,32 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Test download function",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/users/benhutch/downloading-data/DCPP/download_dcpp_suite/extract_context_dataframe.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "pr",
+                "dcppA-hindcast",
+                "1996",
+                "20240130"
+            ]
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["vas", "dcppA-hindcast", "1960", "20231120"]
+            "args": [
+                "vas",
+                "dcppA-hindcast",
+                "1960",
+                "20231120"
+            ]
         }
     ]
 }

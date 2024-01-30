@@ -149,10 +149,10 @@ def create_dataframe(file_context_list: list,
         print(failed_results_list)
 
         # Loop over the failed results list
-        for i in tqdm(range(failed_results_list)):
+        for f_result in failed_results_list:
             try:
                 # Extract the file context
-                hit = failed_results_list[i].file_context().search()
+                hit = f_result.file_context().search()
 
                 files = map(lambda f: {'filename': f.filename, 'url': f.download_url}, hit)
 
@@ -160,9 +160,9 @@ def create_dataframe(file_context_list: list,
                 file_context_list.extend(files)
 
                 # Log the process
-                print(f"Successfully extracted file context for {failed_results_list[i]}")
+                print(f"Successfully extracted file context for {f_result}")
             except:
-                ValueError(f"Failed to extract file context for {failed_results_list[i]}")
+                ValueError(f"Failed to extract file context for {f_result}")
 
     # Loop over the file context list
     for file_context in tqdm.tqdm(file_context_list):
