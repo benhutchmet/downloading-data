@@ -17,6 +17,9 @@ models_rsds = [ "BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "CMCC-CM2-SR5", "HadG
 # Models for precip (pr)
 models_pr = [ "BCC-CSM2-MR", "MPI-ESM1-2-HR", "CanESM5", "CMCC-CM2-SR5", "HadGEM3-GC31-MM", "EC-Earth3", "MPI-ESM1-2-LR", "FGOALS-f3-L", "MIROC6", "IPSL-CM6A-LR", "NorCPM1" ]
 
+# Models to download for pr
+model_todl_pr = [ "MPI-ESM1-2-LR", "FGOALS-f3-L", "IPSL-CM6A-LR", "NorCPM1", "CESM1-1-CAM5-CMIP5" ]
+
 # variable models list dictionary
 var_models = {
     'tas': models,
@@ -24,7 +27,7 @@ var_models = {
     'uas': models_uas_vas,
     'vas': models_uas_vas,
     'rsds': models_rsds,
-    'pr': models_pr
+    'pr': model_todl_pr
 }
 
 # var_models test
