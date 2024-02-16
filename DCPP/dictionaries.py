@@ -37,6 +37,11 @@ var_models_test_pr = {
     'pr': models_pr
 }
 
+# var_models_test_pr_MIROC6
+var_models_test_pr_MIROC6 = {
+    'pr': ['MPI-ESM1-2-LR']
+}
+
 variables_test_pr = ['pr']
 
 # Set up the path for the downloaded data

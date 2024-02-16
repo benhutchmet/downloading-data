@@ -172,8 +172,8 @@ def extract_file_context(results: ResultSet) -> 'list[dict]':
 
             files_list.extend(files)
 
-            # Log the progress
-            print(f"Processed {i+1} out of {total_results} results.")           
+            # # Log the progress
+            # print(f"Processed {i+1} out of {total_results} results.")           
         except:
             print(f"Error: {results[i]}")
 
@@ -313,6 +313,10 @@ def check_file_exists_jasmin(df: pd.DataFrame,
     if 'filepath' not in df.columns:
         df['filepath'] = None
 
+    # Create a new column in the dataframe to store the file size
+    if 'file_size' not in df.columns:
+        df['file_size'] = None
+
     # Loop over the dataframe
     for i in range(len(df)):
         # Get the filename
@@ -384,6 +388,19 @@ def check_file_exists_jasmin(df: pd.DataFrame,
                 df.loc[i, 'filepath'] = filepaths[0]
             else:
                 print("File already exists for " + filename)
+
+            # Get the file size
+            file_size = os.path.getsize(filepaths[0])
+
+            # Set the file size in the dataframe
+            df.loc[i, 'file_size'] = file_size
+
+            # If the file_size is less than 100,000 bytes
+            if file_size < 100000:
+                print("File size is less than 100,000 bytes for " + filename)
+
+                # Set the file_exists to False
+                df.loc[i, 'file_exists'] = False
 
         elif len(filepaths) == 0:
             print("File does not exist for " + filename)
@@ -539,6 +556,7 @@ def create_results_list(params: dict, max_results_list: list,
         # Print the source_id and data_node
         print("Querying for source_id: {} and data_node: {}".format(source_id, data_node))
 
+
         # Query the database
         result = query_data_esgf(connection=connection,
                                 source_id=source_id,
@@ -548,7 +566,6 @@ def create_results_list(params: dict, max_results_list: list,
                                 project=params['project'],
                                 activity_id=params['activity_id'],
                                 data_node=data_node,
-                                sub_experiment_id=params['sub_experiment_id'],
                                 latest=params['latest'])
         
         # Print the number of results

@@ -28,7 +28,7 @@
         python find_valid_nodes.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_sub_experiment_id}
         """
         [[[job]]]
-            execution time limit = PT10M
+            execution time limit = PT120M
     [[extract_context_dataframe<variable><experiment><sub_experiment_id>]]
         script="""
         module load jaspy
@@ -36,7 +36,7 @@
         python extract_context_dataframe.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_sub_experiment_id}
         """
         [[[job]]]
-            execution time limit = PT75M
+            execution time limit = PT300M
     [[download_missing_files<variable><experiment><current_date><sub_experiment_id>]]
         script="""
         module load jaspy
@@ -44,4 +44,4 @@
         python download_missing_files.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_current_date} ${CYLC_TASK_PARAM_sub_experiment_id}
         """
         [[[job]]]
-            execution time limit = PT230M
+            execution time limit = PT500M
