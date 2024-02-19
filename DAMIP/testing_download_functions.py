@@ -546,33 +546,67 @@ def create_results_list(params: dict, max_results_list: list,
     else:
         raise TypeError("max_results_list is not a dictionary or dataframe!")
 
-    # Loop through the max_results_list and query the database for each model and node
-    for i in tqdm(range(len(max_results_df))):
-        
-        # Get the source_id and data_node
-        source_id = max_results_df.loc[i, 'source_id']
-        data_node = max_results_df.loc[i, 'data_node']
+    # If params contains the ['sub_experiment_id'] key
+    if 'sub_experiment_id' in params:
+        print("Sub experiment id is: {}".format(params['sub_experiment_id']))
 
-        # Print the source_id and data_node
-        print("Querying for source_id: {} and data_node: {}".format(source_id, data_node))
+        # Loop through the max_results_list and query the database for each model and node
+        for i in tqdm(range(len(max_results_df))):
+
+            # Get the source_id and data_node
+            source_id = max_results_df.loc[i, 'source_id']
+            data_node = max_results_df.loc[i, 'data_node']
+
+            # Print the source_id and data_node
+            print("Querying for source_id: {} and data_node: {}".format(source_id, data_node))
+
+            # Query the database
+            result = query_data_esgf(connection=connection,
+                                    source_id=source_id,
+                                    experiment_id=params['experiment_id'],
+                                    variable_id=params['variable_id'],
+                                    table_id=params['table_id'],
+                                    project=params['project'],
+                                    activity_id=params['activity_id'],
+                                    data_node=data_node,
+                                    latest=params['latest'],
+                                    sub_experiment_id=params['sub_experiment_id'])
+
+            # Print the number of results
+            print("Found {} results.".format(len(result)))
+
+            # Append the results to the results_list
+            results_list.append(result)
+    else:
+        print("Sub experiment id is not in the params.")
+
+        # Loop through the max_results_list and query the database for each model and node
+        for i in tqdm(range(len(max_results_df))):
+            
+            # Get the source_id and data_node
+            source_id = max_results_df.loc[i, 'source_id']
+            data_node = max_results_df.loc[i, 'data_node']
+
+            # Print the source_id and data_node
+            print("Querying for source_id: {} and data_node: {}".format(source_id, data_node))
 
 
-        # Query the database
-        result = query_data_esgf(connection=connection,
-                                source_id=source_id,
-                                experiment_id=params['experiment_id'],
-                                variable_id=params['variable_id'],
-                                table_id=params['table_id'],
-                                project=params['project'],
-                                activity_id=params['activity_id'],
-                                data_node=data_node,
-                                latest=params['latest'])
-        
-        # Print the number of results
-        print("Found {} results.".format(len(result)))
+            # Query the database
+            result = query_data_esgf(connection=connection,
+                                    source_id=source_id,
+                                    experiment_id=params['experiment_id'],
+                                    variable_id=params['variable_id'],
+                                    table_id=params['table_id'],
+                                    project=params['project'],
+                                    activity_id=params['activity_id'],
+                                    data_node=data_node,
+                                    latest=params['latest'])
+            
+            # Print the number of results
+            print("Found {} results.".format(len(result)))
 
-        # Append the results to the results_list
-        results_list.append(result)
+            # Append the results to the results_list
+            results_list.append(result)
 
     return results_list
 
