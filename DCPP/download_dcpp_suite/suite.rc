@@ -9,8 +9,7 @@
 [scheduling]
     [[dependencies]]
         graph = """
-        find_valid_nodes<variable><experiment><sub_experiment_id> => extract_context_dataframe<variable><experiment><sub_experiment_id>
-        extract_context_dataframe<variable><experiment><sub_experiment_id> => download_missing_files<variable><experiment><current_date><sub_experiment_id>
+        extract_context_dataframe<variable><experiment><sub_experiment_id><current_date> => download_missing_files<variable><experiment><current_date><sub_experiment_id>
         """
 
 [runtime]
@@ -21,22 +20,14 @@
             batch system = slurm
         [[[directives]]]
             --partition=short-serial
-    [[find_valid_nodes<variable><experiment><sub_experiment_id>]]
-        script = """
-        module load jaspy
-        cd ${CYLC_SUITE_RUN_DIR}/
-        python find_valid_nodes.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_sub_experiment_id}
-        """
-        [[[job]]]
-            execution time limit = PT120M
-    [[extract_context_dataframe<variable><experiment><sub_experiment_id>]]
+    [[extract_context_dataframe<variable><experiment><sub_experiment_id><current_date>]]
         script="""
         module load jaspy
         cd ${CYLC_SUITE_RUN_DIR}/
-        python extract_context_dataframe.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_sub_experiment_id}
+        python extract_context_dataframe.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_sub_experiment_id} ${CYLC_TASK_PARAM_current_date}
         """
         [[[job]]]
-            execution time limit = PT300M
+            execution time limit = PT400M
     [[download_missing_files<variable><experiment><current_date><sub_experiment_id>]]
         script="""
         module load jaspy
