@@ -286,11 +286,11 @@ if __name__ == "__main__":
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
-    # Set up the current date
-    current_date = datetime.now().strftime("%Y%m%d")
+    # # Set up the current date
+    # current_date = datetime.now().strftime("%Y%m%d")
 
     # Create a filename for the .csv file
-    filename = f"{variable}_{experiment}_{sub_experiment_id}_file_context_{current_date}.csv"
+    filename = f"{variable}_{experiment}_{sub_experiment_id}_file_context_{date}.csv"
 
     # Form the full path
     path = os.path.join(save_dir, filename)

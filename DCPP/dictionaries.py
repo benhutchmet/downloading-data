@@ -40,9 +40,19 @@ var_models_test_pr = {
     'pr': models_pr
 }
 
+# Var models test for rsds
+var_models_test_rsds = {
+    'rsds': ["CMCC-CM2-SR5"]
+}
+
+# new variable for sfcWind
+var_models_test_sfcWind = {
+    'sfcWind': ["CMCC-CM2-SR5"]
+}
+
 # var_models_test_pr_MIROC6
 var_models_test_pr_MIROC6 = {
-    'pr': ['MPI-ESM1-2-LR']
+    'pr': ['CMCC-CM2-SR5']
 }
 
 variables_test_pr = ['pr']

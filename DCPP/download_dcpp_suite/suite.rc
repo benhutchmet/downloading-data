@@ -4,12 +4,12 @@
         variable="pr"
         experiment="dcppA-hindcast"
         sub_experiment_id=1960..2018
-        current_date="20240216"
+        current_date="20240219"
 
 [scheduling]
     [[dependencies]]
         graph = """
-        extract_context_dataframe<variable><experiment><sub_experiment_id><current_date> => download_missing_files<variable><experiment><current_date><sub_experiment_id>
+        download_missing_files<variable><experiment><current_date><sub_experiment_id>
         """
 
 [runtime]
@@ -20,14 +20,6 @@
             batch system = slurm
         [[[directives]]]
             --partition=short-serial
-    [[extract_context_dataframe<variable><experiment><sub_experiment_id><current_date>]]
-        script="""
-        module load jaspy
-        cd ${CYLC_SUITE_RUN_DIR}/
-        python extract_context_dataframe.py ${CYLC_TASK_PARAM_variable} ${CYLC_TASK_PARAM_experiment} ${CYLC_TASK_PARAM_sub_experiment_id} ${CYLC_TASK_PARAM_current_date}
-        """
-        [[[job]]]
-            execution time limit = PT400M
     [[download_missing_files<variable><experiment><current_date><sub_experiment_id>]]
         script="""
         module load jaspy
