@@ -25,7 +25,7 @@ A script which:
 Usage:
 ------
 
-    python extract_context_download.py <variable> <experiment> <sub_experiment_id>
+    python extract_context_download.py <variable> <experiment> <sub_experiment_id> <date>
 
 Parameters
 ----------
@@ -36,6 +36,10 @@ Parameters
         The experiment to download. e.g. historical, dcppA-hindcast, etc.
     sub_experiment_id: str
         The sub_experiment_id to download. e.g. s1960, s1961, etc.
+    date: str
+        The date to download the data. e.g. 20210801.
+        Default is the current date.
+        If the date is not provided then the current date is used.
 """
 
 # Local imports
@@ -189,19 +193,21 @@ if __name__ == "__main__":
         sub_experiment_id = sys.argv[3]
     except IndexError:
         raise IndexError("Please provide a variable and experiment and sub experiment to download.")
+    
+    # If the date is provided then use it
+    try:
+        date = sys.argv[4]
+    except IndexError:
+        date = datetime.now().strftime("%Y%m%d")
 
     # Modify the sub_experiment_id
     sub_experiment_id = f"s{sub_experiment_id}"
-
-    # Find the csv containing the model and data node pairs
-    # form the filename
-    current_date = datetime.now().strftime("%Y%m%d")
     
     # # FIXME: Minus 1 from the day for testing
     # current_date = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
 
     # Set up the filename
-    filename = f"{variable}_{experiment}_{sub_experiment_id}_valid_nodes_{current_date}.csv"
+    filename = f"{variable}_{experiment}_{sub_experiment_id}_valid_nodes_{date}.csv"
 
     # Set up the path
     path = os.path.join(dic.download_csv_path, filename)
