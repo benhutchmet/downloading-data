@@ -744,9 +744,9 @@ def download_files(download_dir: str,
                             unit_scale = True):
                 f.write(data)
 
-            # If the total size is no 0
-            if total_size != 0:
-                print("File is not empty")
-                print("Download complete - file saved to {}".format(download_path))
+            # # If the total size is no 0
+            # if total_size != 0:
+            #     print("File is not empty")
+            #     print("Download complete - file saved to {}".format(download_path))
 
     return files_df
