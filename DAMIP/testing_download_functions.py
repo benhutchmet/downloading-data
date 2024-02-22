@@ -373,7 +373,7 @@ def check_file_exists_jasmin(df: pd.DataFrame,
                                     grid_name, "files", "d*", filename)
         elif directory_first == 'gws':
             # Form the pattern
-            pattern = os.path.join(directory, experiment_name, "data",
+            pattern = os.path.join(directory, experiment_name,
                                     variable_name, model_name, filename)
 
         # Get a list of all paths that match the pattern

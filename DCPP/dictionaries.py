@@ -74,18 +74,18 @@ model_todl_pr = [
     "CESM1-1-CAM5-CMIP5",
 ]
 
+# Set up the models to download for psl
+model_todl_psl = ["MRI-ESM2-0", "CNRM-ESM2-1"]
+
 # variable models list dictionary
 var_models = {
     "tas": models,
-    "psl": models_todl_psl,
+    "psl": model_todl_psl,
     "uas": models_uas_vas,
     "vas": models_uas_vas,
     "rsds": models_rsds,
     "pr": model_todl_pr,
 }
-
-# Set up the models to download for psl
-model_todl_psl = ["MRI-ESM2-0", "CNRM-ESM2-1"]
 
 # var_models test
 var_models_test = {"rsds": models_rsds}
@@ -113,6 +113,13 @@ var_models_test_pr_IPSL_CM6A_LR = {"pr": ["IPSL-CM6A-LR"]}
 
 # Var models test pr NorCPM1
 var_models_test_pr_NorCPM1 = {"pr": ["NorCPM1"]}
+
+# MRI-ESM2-0 var models test for psl
+var_models_test_psl_MRI_ESM2_0 = {"psl": ["MRI-ESM2-0"]}
+
+# CNRM-ESM2-1 var models test for psl
+var_models_test_psl_CNRM_ESM2_1 = {"psl": ["CNRM-ESM2-1"]}
+
 
 variables_test_pr = ["pr"]
 
